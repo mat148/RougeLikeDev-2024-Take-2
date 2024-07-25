@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://dqhplxk2aafaq"]
+
+[ext_resource type="Script" path="res://src/Game/game.gd" id="1_br1ub"]
+[ext_resource type="Script" path="res://src/Game/event_handler.gd" id="2_hse8c"]
+[ext_resource type="Texture2D" uid="uid://eda6dnpl0wd1" path="res://assets/images/monochrome_packed.png" id="2_qwiyu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cr4dw"]
+atlas = ExtResource("2_qwiyu")
+region = Rect2(288, 112, 16, 16)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_br1ub")
+
+[node name="EventHandler" type="Node2D" parent="."]
+script = ExtResource("2_hse8c")
+
+[node name="Player" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_cr4dw")
+centered = false
