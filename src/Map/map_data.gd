@@ -4,8 +4,10 @@ extends RefCounted
 const tile_types = {
 	"floor": preload("res://assets/definitions/tiles/tile_definition_floor.tres"),
 	"wall": preload("res://assets/definitions/tiles/tile_definition_wall.tres"),
+	"tree": preload("res://assets/definitions/tiles/tile_definition_tree.tres"),
 }
 
+var area: Rect2i
 var width: int
 var height: int
 var tiles: Array[Tile]
@@ -14,6 +16,7 @@ var tiles: Array[Tile]
 func _init(map_width: int, map_height: int) -> void:
 	width = map_width
 	height = map_height
+	area = Rect2i(0, 0, map_width, map_height)
 	_setup_tiles()
 
 
@@ -25,6 +28,8 @@ func _setup_tiles() -> void:
 			var tile := Tile.new(tile_position, tile_types.wall)
 			tiles.append(tile)
 
+func is_tile_in_bounds(tile: Tile) -> bool:
+	return tiles.has(tile)
 
 func is_in_bounds(coordinate: Vector2i) -> bool:
 	return (

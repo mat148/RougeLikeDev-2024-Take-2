@@ -2,8 +2,9 @@ res://src/Game/game.tscn
 res://assets/definitions/entities/actors/entity_definition_player.tres
 res://assets/definitions/tiles/tile_definition_floor.tres
 res://assets/definitions/tiles/tile_definition_wall.tres
-res://src/Game/event_handler.gd
+res://assets/definitions/tiles/tile_definition_tree.tres
+res://src/Map/rooms_and_mazes_generator.gd
 res://src/Map/map_data.gd
-res://src/Map/dungeon_generator.gd
-res://src/Map/map.gd
 res://src/Game/game.gd
+res://src/Map/map.gd
+res://src/Map/tile.gd

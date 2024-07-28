@@ -16,13 +16,13 @@ func _ready() -> void:
 	remove_child(camera)
 	player.add_child(camera)
 	entities.add_child(player)
-	map.generate(player)
+	map.generate(player, tile_size)
 
 
-func _physics_process(_delta: float) -> void:
-	var action: Action = event_handler.get_action()
-	if action:
-		action.perform(self, player)
+#func _physics_process(_delta: float) -> void:
+	#var action: Action = event_handler.get_action()
+	#if action:
+		#action.perform(self, player)
 
 
 func get_map_data() -> MapData:

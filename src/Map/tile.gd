@@ -1,7 +1,7 @@
 class_name Tile
 extends Sprite2D
 
-var _definition: TileDefinition
+@export var _definition: TileDefinition
 
 
 func _init(grid_position: Vector2i, tile_definition: TileDefinition) -> void:
