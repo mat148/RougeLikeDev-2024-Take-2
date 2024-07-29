@@ -49,11 +49,13 @@ func generate_dungeon(start_pos) -> MapData:
 	return dungeon
 
 func generate_maze(start_pos) -> void:
-	var stack = [start_pos]
-	await _carve_tile(Vector2i(start_pos.x, start_pos.y), 0.03, 'tree')
+	var stack = []
+	if _canCarve(start_pos, Vector2.ZERO):
+		await _carve_tile(Vector2i(start_pos.x, start_pos.y), 0.03, 'tree')
+		stack = [start_pos]
 	
 	while stack.size() > 0:
-		var current_pos = stack[stack.size() - 1]
+		var current_pos = stack.back()
 		var shuffled_directions = Directions.duplicate()
 		shuffled_directions.shuffle()
 
@@ -61,7 +63,7 @@ func generate_maze(start_pos) -> void:
 
 		for direction in shuffled_directions:
 			var next_pos = current_pos + direction * 2
-			if is_within_bounds(next_pos) and !dungeon.tiles[next_pos.x][next_pos.y].is_walkable():
+			if _canCarve(current_pos, direction):
 				var between_pos = current_pos + direction
 				await _carve_tile(Vector2i(between_pos.x, between_pos.y), 0.03, 'tree')
 				await _carve_tile(Vector2i(next_pos.x, next_pos.y), 0.03, 'tree')
@@ -116,25 +118,14 @@ func _carve_room(dungeon: MapData, room: Rect2i) -> void:
 func _startRegion() -> void:
 	_currentRegion += 1
 
-func is_within_bounds(pos) -> bool:
-	return pos.x > 0 and pos.x < map_width - 1 and pos.y > 0 and pos.y < map_height - 1
-
 func _carve_tile(tile_position: Vector2i, speed: float, type: String = 'floor') -> void:
 	var tile_type = dungeon.tile_types[type]
 	var tile: Tile = dungeon.get_tile(tile_position)
 	tile.set_tile_type(tile_type)
 	
-	#if type == 'tree':
-		#tile.is_walkway = true
-	#_regions[dungeon.grid_to_index(tile_position)] = _currentRegion
-	
 	if speed > 0:
 		await Global.wait(speed)
 
-# Gets whether or not an opening can be carved from the given starting
-# [Cell] at [pos] to the adjacent Cell facing [direction]. Returns `true`
-# if the starting Cell is in bounds and the destination Cell is filled
-# (or out of bounds).</returns>
 func _canCarve(cell: Vector2i, dir_to_cell_neighbor: Vector2i) -> bool:
 	var Direction = [
 		Vector2i(0, -1), #UP
@@ -148,25 +139,17 @@ func _canCarve(cell: Vector2i, dir_to_cell_neighbor: Vector2i) -> bool:
 	]
 	
 	#check is cell is inside the dungeon
-	if !dungeon.area.grow(-1).has_point(cell + dir_to_cell_neighbor): return false
-	#return !dungeon.get_tile(cell + dir_to_cell_neighbor * 2).is_walkable()
+	if !dungeon.area.grow(-1).has_point(cell + dir_to_cell_neighbor * 3): return false
 	
 	#check in 8 directions around cell
 	#except cell?
 	for dir in Direction:
-		var tile_vector = cell + dir_to_cell_neighbor + dir
+		var tile_vector = (cell + dir_to_cell_neighbor * 2) + dir
 		
-		#if tile_vector != cell:
 		var tile = dungeon.get_tile(tile_vector)
 		if !dungeon.area.grow(0).has_point(tile_vector):
 			return false
-		if tile.is_walkable() && !tile.is_walkway:
+		if tile.is_walkable():
 			return false
 	
 	return true
-	
-	#Look around new position for walkable area
-	
-	#TODO modify to check if this is a wall
-	#var tile = dungeon.get_tile(pos + direction * 2)
-	#return !tile.is_walkable()
