@@ -10,7 +10,7 @@ const tile_types = {
 var area: Rect2i
 var width: int
 var height: int
-var tiles: Array[Tile]
+var tiles: Array = []
 
 
 func _init(map_width: int, map_height: int) -> void:
@@ -22,11 +22,11 @@ func _init(map_width: int, map_height: int) -> void:
 
 func _setup_tiles() -> void:
 	tiles = []
-	for y in height:
-		for x in width:
-			var tile_position := Vector2i(x, y)
-			var tile := Tile.new(tile_position, tile_types.wall)
-			tiles.append(tile)
+	for x in range(0, width, 1):
+		tiles.append([]);
+		for y in range(0, height, 1):
+			var tile := Tile.new(Vector2i(x, y), tile_types.wall)
+			tiles[x].append(tile);
 
 func is_tile_in_bounds(tile: Tile) -> bool:
 	return tiles.has(tile)
@@ -41,10 +41,10 @@ func is_in_bounds(coordinate: Vector2i) -> bool:
 
 
 func get_tile(grid_position: Vector2i) -> Tile:
-	var tile_index: int = grid_to_index(grid_position)
-	if tile_index == -1:
-		return null
-	return tiles[tile_index]
+	#var tile_index: int = grid_to_index(grid_position)
+	#if tile_index == -1:
+		#return null
+	return tiles[grid_position.x][grid_position.y]
 
 
 func grid_to_index(grid_position: Vector2i) -> int:

@@ -13,10 +13,13 @@ const tile_size = 16
 func _ready() -> void:
 	player = Entity.new(Vector2i.ZERO, player_definition)
 	var camera: Camera2D = $Camera2D
-	remove_child(camera)
-	player.add_child(camera)
+	#remove_child(camera)
+	#player.add_child(camera)
 	entities.add_child(player)
-	map.generate(player, tile_size)
+	await map.generate(Vector2i(1,1))
+	
+	#var map_dimensions = Vector2(map.map_data.width, map.map_data.height)
+	#camera.position = (map_dimensions * tile_size) / 2
 
 
 #func _physics_process(_delta: float) -> void:

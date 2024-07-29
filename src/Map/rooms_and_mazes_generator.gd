@@ -231,6 +231,9 @@ func _carve_tile(tile_position: Vector2i, speed: float, type: String = 'floor') 
 	var tile_type = dungeon.tile_types[type]
 	var tile: Tile = dungeon.get_tile(tile_position)
 	tile.set_tile_type(tile_type)
+	
+	if type == 'tree':
+		tile.is_walkway = true
 	#_regions[dungeon.grid_to_index(tile_position)] = _currentRegion
 	
 	if speed > 0:
@@ -267,21 +270,21 @@ func _canCarve(cell: Vector2i, dir_to_cell_neighbor: Vector2i) -> bool:
 	
 	#check is cell is inside the dungeon
 	if !dungeon.area.grow(-1).has_point(cell + dir_to_cell_neighbor): return false
-	return !dungeon.get_tile(cell + dir_to_cell_neighbor * 2).is_walkable()
+	#return !dungeon.get_tile(cell + dir_to_cell_neighbor * 2).is_walkable()
 	
 	#check in 8 directions around cell
 	#except cell?
-	#for dir in Direction:
-		#var tile_vector = cell + dir_to_cell_neighbor + dir
-		#
+	for dir in Direction:
+		var tile_vector = cell + dir_to_cell_neighbor + dir
+		
 		#if tile_vector != cell:
-			#var tile = dungeon.get_tile(tile_vector)
-			#if !dungeon.area.grow(0).has_point(tile_vector):
-				#return false
-			#if tile.is_walkable():
-				#return false
-	#
-	#return true
+		var tile = dungeon.get_tile(tile_vector)
+		if !dungeon.area.grow(0).has_point(tile_vector):
+			return false
+		if tile.is_walkable() && !tile.is_walkway:
+			return false
+	
+	return true
 	
 	#Look around new position for walkable area
 	

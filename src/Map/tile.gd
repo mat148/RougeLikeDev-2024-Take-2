@@ -2,6 +2,7 @@ class_name Tile
 extends Sprite2D
 
 @export var _definition: TileDefinition
+@export var is_walkway: bool = false
 
 
 func _init(grid_position: Vector2i, tile_definition: TileDefinition) -> void:
