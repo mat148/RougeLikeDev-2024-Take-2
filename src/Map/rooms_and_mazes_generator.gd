@@ -38,8 +38,8 @@ var tile_size: int = 0
 func _ready() -> void:
 	_rng.randomize()
 
-func generate_dungeon(player, new_tile_size) -> MapData:
-	tile_size = new_tile_size
+func generate_dungeon() -> MapData:
+	#tile_size = new_tile_size
 	if map_width % 2 == 0 || map_height % 2 == 0:
 		printerr("The stage must be odd-sized.")
 		return
