@@ -12,6 +12,8 @@ var roomExtraSize: int = 0
 # that that position is a part of.
 var _rooms: Array[Rect2i] = []
 
+var _regions: Array[Array] = []
+
 var dungeon: MapData
 
 var Directions = [
@@ -28,6 +30,11 @@ var _rng := RandomNumberGenerator.new()
 
 func _ready() -> void:
 	_rng.randomize()
+	
+	for x in range(0, map_width, 1):
+		_regions.append([])
+		for y in range(0, map_height, 1):
+			_regions[x].append(0)
 
 func generate_dungeon(start_pos) -> MapData:
 	if map_width % 2 == 0 || map_height % 2 == 0:
@@ -45,6 +52,11 @@ func generate_dungeon(start_pos) -> MapData:
 			var pos = Vector2i(x, y)
 			if (!dungeon.get_tile(pos).is_walkable()):
 				await generate_maze(pos)
+	
+	_connectRegions()
+	#_removeDeadEnds()
+#
+	#_rooms.forEach(onDecorateRoom)
 	
 	return dungeon
 
@@ -74,13 +86,83 @@ func generate_maze(start_pos) -> void:
 			if not moved:
 				stack.pop_back()
 
+func _connectRegions() -> void:
+	# Find all of the tiles that can connect two (or more) regions.
+	var connectorRegions = [[]]
+	
+	for y in range(1, dungeon.height - 1, 1):
+		for x in range(1, dungeon.width - 1, 1):
+			var pos = Vector2i(x, y)
+			
+			# Can't already be part of a region.
+			if dungeon.get_tile(pos).is_walkable(): continue
+
+			var regions: Array[int] = []
+			for dir in Directions:
+				var posDir = pos + dir
+				var region = _regions[posDir.x][posDir.y]
+				if region != null: regions.append(region)
+
+			if regions.size() < 2: continue
+
+			connectorRegions[pos.x][pos.y] = regions
+
+	var connectors = connectorRegions.keys()
+#
+	## Keep track of which regions have been merged. This maps an original
+	## region index to the one it has been merged to.
+	#var merged = {}
+	#var openRegions: Dictionary = {}
+	#for i in range(0, _currentRegion, 1):
+		#merged[i] = i;
+		#openRegions.append(i);
+
+	# Keep connecting regions until we're down to one.
+	#while (openRegions.length > 1) {
+		#var connector = rng.item(connectors);
+#
+		## Carve the connection.
+		#_addJunction(connector);
+#
+		## Merge the connected regions. We'll pick one region (arbitrarily) and
+		## map all of the other regions to its index.
+		#var regions = connectorRegions[connector].map((region) => merged[region]);
+		#var dest = regions.first;
+		#var sources = regions.skip(1).toList();
+#
+		## Merge all of the affected regions. We have to look at *all* of the
+		## regions because other regions may have previously been merged with
+		## some of the ones we're merging now.
+		#for (var i = 0; i <= _currentRegion; i++) {
+			#if (sources.contains(merged[i])) {
+			#merged[i] = dest;
+		#}
+	#}
+#
+	## The sources are no longer in use.
+	#openRegions.removeAll(sources);
+#
+	## Remove any connectors that aren't needed anymore.
+	#connectors.removeWhere((pos) {
+	## Don't allow connectors right next to each other.
+	#if (connector - pos < 2) return true;
+#
+	## If the connector no long spans different regions, we don't need it.
+	#var regions = connectorRegions[pos].map((region) => merged[region]).toSet();
+#
+	#if (regions.length > 1) return false;
+#
+	## This connecter isn't needed, but connect it occasionally so that the
+	## dungeon isn't singly-connected.
+	#if (rng.oneIn(extraConnectorChance)) _addJunction(pos);
+#
+	#return true;
+	#});
+	#}
+	#}
+
 func _addRooms() -> void:
 	for i in range(0, numRoomTries):
-		# Pick a random room size. The funny math here does two things:
-		# - It makes sure rooms are odd-sized to line up with maze.
-		# - It avoids creating rooms that are too rectangular: too tall and
-		#   narrow or too wide and flat.
-		# TODO: This isn't very flexible or tunable. Do something better here.
 		var size = _rng.randi_range(1, 3 + roomExtraSize) * 2 + 1
 		var rectangularity = _rng.randi_range(0, 1 + size / 2) * 2
 		var width = size
@@ -122,6 +204,8 @@ func _carve_tile(tile_position: Vector2i, speed: float, type: String = 'floor') 
 	var tile_type = dungeon.tile_types[type]
 	var tile: Tile = dungeon.get_tile(tile_position)
 	tile.set_tile_type(tile_type)
+	
+	_regions[tile_position.x][tile_position.y] = _currentRegion
 	
 	if speed > 0:
 		await Global.wait(speed)

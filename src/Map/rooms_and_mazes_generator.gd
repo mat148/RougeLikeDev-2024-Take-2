@@ -234,7 +234,7 @@ func _carve_tile(tile_position: Vector2i, speed: float, type: String = 'floor') 
 	
 	if type == 'tree':
 		tile.is_walkway = true
-	#_regions[dungeon.grid_to_index(tile_position)] = _currentRegion
+	#_regions[tile_position] = _currentRegion
 	
 	if speed > 0:
 		await Global.wait(speed)
