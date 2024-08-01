@@ -18,11 +18,11 @@ script = ExtResource("2_hse8c")
 [node name="Map" type="Node2D" parent="."]
 script = ExtResource("3_udh08")
 
+[node name="Entities" type="Node2D" parent="Map"]
+
 [node name="DungeonGenerator" type="Node" parent="Map"]
 script = ExtResource("4_tgvgb")
 map_width = 81
 
 [node name="FieldOfView" type="Node" parent="Map"]
 script = ExtResource("5_t23mv")
-
-[node name="Entities" type="Node2D" parent="."]

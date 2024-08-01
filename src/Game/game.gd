@@ -6,7 +6,6 @@ const tile_size = 16
 
 @onready var player: Entity
 @onready var event_handler: EventHandler = $EventHandler
-@onready var entities: Node2D = $Entities
 @onready var map: Map = $Map
 @onready var camera: Camera2D = $Camera2D
 
