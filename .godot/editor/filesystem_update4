@@ -1,13 +1,6 @@
-res://src/Game/game.tscn
+res://src/Game/game3D_test.tscn
+res://assets/definitions/entities/actors/entity_definition_player.tres
 res://assets/definitions/tiles/tile_definition_floor.tres
 res://assets/definitions/tiles/tile_definition_wall.tres
 res://assets/definitions/tiles/tile_definition_tree.tres
-res://src/Game/game_3d.gd
-res://src/Map/map_3d.gd
-res://assets/definitions/entities/actors/entity_definition_player.tres
-res://src/Entities/entity.gd
-res://src/Entities/Actors/Actions/action.gd
-res://src/Entities/Actors/Actions/movement_action.gd
-res://src/Entities/Actors/Actions/escape_action.gd
-res://src/Map/3d_dungeon.gd
-res://src/Map/field_of_view.gd
+res://src/Game/game.tscn
