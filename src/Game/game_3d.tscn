@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://cnqh541ti2uac"]
+
+[ext_resource type="Script" path="res://src/Game/game_3d.gd" id="1_238v1"]
+[ext_resource type="Script" path="res://src/Game/event_handler.gd" id="2_0pv4n"]
+[ext_resource type="Script" path="res://src/Map/map_3d.gd" id="3_4xom3"]
+[ext_resource type="Script" path="res://src/Map/dungeon_generator_3d.gd" id="4_4t4on"]
+
+[node name="Game" type="Node3D"]
+script = ExtResource("1_238v1")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Node2D" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Node2D"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 32
+text = "0"
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+light_energy = 3.909
+
+[node name="Camera2D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 3)
+
+[node name="EventHandler" type="Node2D" parent="."]
+script = ExtResource("2_0pv4n")
+
+[node name="Map" type="Node3D" parent="."]
+script = ExtResource("3_4xom3")
+
+[node name="Entities" type="Node2D" parent="Map"]
+unique_name_in_owner = true
+
+[node name="DungeonGenerator" type="Node" parent="Map"]
+script = ExtResource("4_4t4on")
+
+[connection signal="down_layer" from="EventHandler" to="." method="_on_event_handler_down_layer"]
+[connection signal="up_layer" from="EventHandler" to="." method="_on_event_handler_up_layer"]

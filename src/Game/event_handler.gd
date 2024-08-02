@@ -1,18 +1,26 @@
 class_name EventHandler
 extends Node
 
+signal up_layer
+signal down_layer
+
+func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("up"):
+		up_layer.emit()
+	if Input.is_action_just_pressed("down"):
+		down_layer.emit()
 
 func get_action() -> Action:
 	var action: Action = null
 	
-	if Input.is_action_pressed("ui_up"):
-		action = MovementAction.new(0, -1)
-	elif Input.is_action_pressed("ui_down"):
-		action = MovementAction.new(0, 1)
-	elif Input.is_action_pressed("ui_left"):
-		action = MovementAction.new(-1, 0)
-	elif Input.is_action_pressed("ui_right"):
-		action = MovementAction.new(1, 0)
+	if Input.is_action_just_pressed("move_down"):
+		action = MovementAction3D.new(0, -1, 0)
+	elif Input.is_action_just_pressed("move_up"):
+		action = MovementAction3D.new(0, 1, 0)
+	elif Input.is_action_just_pressed("move_left"):
+		action = MovementAction3D.new(-1, 0, 0)
+	elif Input.is_action_just_pressed("move_right"):
+		action = MovementAction3D.new(1, 0, 0)
 	
 	if Input.is_action_just_pressed("ui_cancel"):
 		action = EscapeAction.new()

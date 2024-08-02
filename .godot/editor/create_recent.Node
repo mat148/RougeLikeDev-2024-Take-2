@@ -1,4 +1,12 @@
+Control
+Label
+Node2D
+CanvasLayer
+Sprite3D
+CSGPolygon3D
+DirectionalLight3D
+Node3D
+Camera3D
 Node
 Sprite2D
 Camera2D
-Node2D
