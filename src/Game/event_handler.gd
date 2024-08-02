@@ -3,15 +3,15 @@ extends Node
 
 signal up_layer
 signal down_layer
+	
 
-func _input(event: InputEvent) -> void:
+func get_action() -> Action:
+	var action: Action = null
+	
 	if Input.is_action_just_pressed("up"):
 		up_layer.emit()
 	if Input.is_action_just_pressed("down"):
 		down_layer.emit()
-
-func get_action() -> Action:
-	var action: Action = null
 	
 	if Input.is_action_just_pressed("move_down"):
 		action = MovementAction3D.new(0, -1, 0)

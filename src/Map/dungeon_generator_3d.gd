@@ -7,7 +7,7 @@ extends Node
 @export var map_depth: int = 8
 
 @export_category("Rooms RNG")
-@export var max_rooms: int = 3
+@export var max_rooms: int = 30
 @export var room_max_size: int = 4
 @export var room_min_size: int = 2
 
@@ -26,9 +26,9 @@ func generate_dungeon(player: Entity3D) -> MapData3D:
 		var room_height: int = _rng.randi_range(room_min_size, room_max_size)
 		var room_depth: int = _rng.randi_range(room_min_size, room_max_size)
 		
-		var x: int = _rng.randi_range(0, dungeon.width - room_width - 1)
-		var y: int = _rng.randi_range(0, dungeon.height - room_height - 1)
-		var z: int = _rng.randi_range(0, dungeon.depth - room_depth - 1)
+		var x: int = _rng.randi_range(1, dungeon.width - room_width - 2)
+		var y: int = _rng.randi_range(1, dungeon.height - room_height - 2)
+		var z: int = _rng.randi_range(1, dungeon.depth - room_depth - 2)
 		
 		var new_room := Room3D.new(Vector3(x, y, z), room_width, room_height, room_depth)
 		

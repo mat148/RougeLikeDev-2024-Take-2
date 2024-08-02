@@ -51,7 +51,7 @@ func show_layer(move: int) -> void:
 			for y in map.map_data.height:
 				map.map_data.get_tile(Vector3i(x,y,current_layer)).visible = true
 		
-		player.show_layer(current_layer)
+		#player.show_layer(current_layer)
 		camera.position.z = ((current_layer + 12) * tile_size)
 		
 		label.text = str(current_layer)
