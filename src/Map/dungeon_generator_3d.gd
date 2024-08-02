@@ -2,25 +2,24 @@ class_name DungeonGenerator3D
 extends Node
 
 @export_category("Map Dimensions")
-@export var map_width: int = 80
-@export var map_height: int = 60
-@export var map_depth: int = 10
+@export var map_width: int = 30
+@export var map_height: int = 30
+@export var map_depth: int = 8
 
 @export_category("Rooms RNG")
-@export var max_rooms: int = 4
+@export var max_rooms: int = 3
 @export var room_max_size: int = 4
 @export var room_min_size: int = 2
 
 var _rng := RandomNumberGenerator.new()
 
+@export var rooms: Array[Room3D] = []
 
 func _ready() -> void:
 	_rng.randomize()
 
 func generate_dungeon(player: Entity3D) -> MapData3D:
 	var dungeon := MapData3D.new(map_width, map_height, map_depth)
-	
-	var rooms: Array[Room3D] = []
 	
 	for _try_room in max_rooms:
 		var room_width: int = _rng.randi_range(room_min_size, room_max_size)
@@ -29,8 +28,7 @@ func generate_dungeon(player: Entity3D) -> MapData3D:
 		
 		var x: int = _rng.randi_range(0, dungeon.width - room_width - 1)
 		var y: int = _rng.randi_range(0, dungeon.height - room_height - 1)
-		#var z: int = _rng.randi_range(0, dungeon.depth - room_depth - 1)
-		var z: int = 0
+		var z: int = _rng.randi_range(0, dungeon.depth - room_depth - 1)
 		
 		var new_room := Room3D.new(Vector3(x, y, z), room_width, room_height, room_depth)
 		
@@ -47,20 +45,22 @@ func generate_dungeon(player: Entity3D) -> MapData3D:
 		
 		if rooms.is_empty():
 			player.grid_position = new_room.get_center()
-		#else:
-			#_tunnel_between(dungeon, rooms.back().get_center(), new_room.get_center())
+		else:
+			_tunnel_between(dungeon, rooms.back().get_center(), new_room.get_center())
 		
 		rooms.append(new_room)
 	
 	return dungeon
 
 func _carve_room(dungeon: MapData3D, room: Room3D) -> void:
-	var inner: Room3D = room.grow(-1)
-	for y in range(inner.position.y, inner.end.y + 1):
-		for x in range(inner.position.x, inner.end.x + 1):
-			for z in range(inner.position.z, inner.end.z + 1):
-				_carve_tile(dungeon, x, y, z)
+	var start_position: Vector3 = room.room_position
+	var end_position: Vector3 = room.end
 
+	for z in range(start_position.z, end_position.z):
+		for y in range(start_position.y, end_position.y):
+			for x in range(start_position.x, end_position.x):
+				_carve_tile(dungeon, x, y, z)
+ 
 func _carve_tile(dungeon: MapData3D, x: int, y: int, z: int) -> void:
 	var tile_position = Vector3i(x, y, z)
 	var tile: Tile3D = dungeon.get_tile(tile_position)
@@ -70,7 +70,7 @@ func _tunnel_horizontal(dungeon: MapData3D, y: int, start: Vector3i, end: Vector
 	var x_min: int = mini(start.x, end.x)
 	var x_max: int = maxi(start.x, end.x)
 	for x in range(x_min, x_max + 1):
-		_carve_tile(dungeon, x, y, start.z)
+		_carve_tile(dungeon, x, y, end.z)
 
 func _tunnel_vertical(dungeon: MapData3D, x: int, start: Vector3i, end: Vector3i) -> void:
 	var y_min: int = mini(start.y, end.y)

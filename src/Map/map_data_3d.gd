@@ -18,7 +18,7 @@ func _init(map_width: int, map_height: int, map_depth: int) -> void:
 	width = map_width
 	height = map_height
 	depth = map_depth
-	area = Rect2i(0, 0, map_width, map_height)
+	#area = Rect2i(0, 0, map_width, map_height)
 	_setup_tiles()
 
 
@@ -58,4 +58,4 @@ func get_tile(grid_position: Vector3i) -> Tile3D:
 func grid_to_index(grid_position: Vector3i) -> int:
 	if not is_in_bounds(grid_position):
 		return -1
-	return grid_position.y * width + grid_position.x
+	return grid_position.z * width * height + grid_position.y * width + grid_position.x
