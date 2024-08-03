@@ -44,7 +44,7 @@ script = ExtResource("2_0pv4n")
 [node name="Map" type="Node3D" parent="."]
 script = ExtResource("3_4xom3")
 
-[node name="Entities" type="Node2D" parent="Map"]
+[node name="Entities" type="Node3D" parent="Map"]
 unique_name_in_owner = true
 
 [node name="DungeonGenerator" type="Node" parent="Map"]

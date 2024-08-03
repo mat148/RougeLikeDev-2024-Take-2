@@ -10,8 +10,10 @@ func get_action() -> Action:
 	
 	if Input.is_action_just_pressed("up"):
 		up_layer.emit()
+		#action = MovementAction3D.new(0, 0, 1)
 	if Input.is_action_just_pressed("down"):
 		down_layer.emit()
+		#action = MovementAction3D.new(0, 0, -1)
 	
 	if Input.is_action_just_pressed("move_down"):
 		action = MovementAction3D.new(0, -1, 0)

@@ -21,7 +21,7 @@ func _ready() -> void:
 	%Entities.add_child(player)
 	await map.generate(player)
 	#map.update_fov(player.grid_position)
-	current_layer = player.position.z
+	current_layer = player.grid_position.z
 	
 	camera.position.z = current_layer + 3
 	show_layer(0)
@@ -33,7 +33,6 @@ func _physics_process(_delta: float) -> void:
 		action.perform(self, player)
 		#if player.grid_position != previous_player_position:
 			#map.update_fov(player.grid_position)
-
 
 func get_map_data() -> MapData3D:
 	return map.map_data
@@ -51,7 +50,7 @@ func show_layer(move: int) -> void:
 			for y in map.map_data.height:
 				map.map_data.get_tile(Vector3i(x,y,current_layer)).visible = true
 		
-		#player.show_layer(current_layer)
+		player.show_layer(current_layer)
 		camera.position.z = ((current_layer + 12) * tile_size)
 		
 		label.text = str(current_layer)

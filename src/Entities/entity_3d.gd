@@ -7,9 +7,9 @@ var grid_position: Vector3i:
 	set(value):
 		grid_position = value
 		entity_layer = grid_position.z
+		print(entity_layer)
 		var world_position: Vector3 = Grid3D.grid_to_world(grid_position)
 		position = Vector3(world_position.x, world_position.y, world_position.z + 0.03)
-
 
 func _init(start_position: Vector3i, entity_definition: EntityDefinition) -> void:
 	centered = false
