@@ -1,3 +1,4 @@
+TileConfig
 TileDefinition
 TileSet
 EntityDefinition

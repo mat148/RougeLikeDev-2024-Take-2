@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="TileConfig" load_steps=2 format=3 uid="uid://ccy7ckirlkjda"]
+
+[ext_resource type="Script" path="res://src/Map/tile_config.gd" id="1_ajrlx"]
+
+[resource]
+script = ExtResource("1_ajrlx")

@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxucyh31mtss5"]
+
+[ext_resource type="Script" path="res://src/Game/wfc-test.gd" id="1_bvhdn"]
+[ext_resource type="Script" path="res://src/Map/map_wfc.gd" id="2_ek7en"]
+[ext_resource type="Script" path="res://src/Game/wfc_generator.gd" id="3_1x1d8"]
+
+[node name="Wfc-test" type="Node2D"]
+script = ExtResource("1_bvhdn")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Map" type="Node2D" parent="."]
+script = ExtResource("2_ek7en")
+
+[node name="Wfc_generator" type="Node" parent="Map"]
+script = ExtResource("3_1x1d8")
