@@ -1,5 +1,8 @@
+TextureRect
+Sprite2D
+CollisionPolygon2D
+Area2D
 Line2D
 Camera2D
 Node
-Sprite2D
 Node2D

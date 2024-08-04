@@ -5,6 +5,10 @@
 
 [node name="Road-test" type="Node2D"]
 script = ExtResource("1_5gap8")
+world_width = null
+world_height = null
+tile_size = null
+num_of_roads = null
 
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("2_yjxo4")
