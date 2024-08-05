@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cctlwg8bpbpse"]
+
+[ext_resource type="Script" path="res://src/Map/map_wfc.gd" id="1_ib001"]
+[ext_resource type="Script" path="res://src/Game/wfc_generator.gd" id="2_hvmxl"]
+
+[node name="Map" type="Node2D"]
+script = ExtResource("1_ib001")
+
+[node name="Wfc_generator" type="Node" parent="."]
+script = ExtResource("2_hvmxl")

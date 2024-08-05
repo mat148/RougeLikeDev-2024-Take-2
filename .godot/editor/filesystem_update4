@@ -13,3 +13,6 @@ res://assets/definitions/tiles/tile_definition_grass_three.tres
 res://assets/definitions/tiles/tile_definition_flowers.tres
 res://assets/definitions/tiles/tile_config.tres
 res://assets/definitions/tiles/tile_definition_wall_edge.tres
+res://src/Game/wfc-test.gd
+res://src/Map/map_wfc.tscn
+res://src/Map/map_wfc.gd
