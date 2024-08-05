@@ -3,11 +3,12 @@ extends Sprite2D
 
 @export var _definition: TileDefinition
 
-@export var possibilities: Dictionary = {
-	'TILE_FLOOR': preload("res://assets/definitions/tiles/tile_definition_floor.tres"),
-	'TILE_TREE': preload("res://assets/definitions/tiles/tile_definition_tree.tres"),
-	'TILE_WALL': preload("res://assets/definitions/tiles/tile_definition_wall.tres")
-}
+#@export var possibilities: Dictionary = {
+	#'TILE_FLOOR': preload("res://assets/definitions/tiles/tile_definition_floor.tres"),
+	#'TILE_TREE': preload("res://assets/definitions/tiles/tile_definition_tree.tres"),
+	#'TILE_WALL': preload("res://assets/definitions/tiles/tile_definition_wall.tres")
+#}
+var possibilities: Array
 
 var tile_config = preload("res://assets/definitions/tiles/tile_config.tres")
 
@@ -29,7 +30,9 @@ var is_in_view: bool = false:
 			is_explored = true
 
 func _init(grid_position: Vector2i) -> void:
-	entropy = possibilities.size() - 1
+	#list(tileRules.keys())
+	possibilities = tile_config.tileRules.keys()
+	entropy = possibilities.size()
 	#visible = false
 	centered = false
 	position = Grid.grid_to_world(grid_position)
@@ -54,19 +57,16 @@ func get_neighbor(direction: String) -> TileWFC:
 func get_directions() -> Array:
 	return neighbors.keys()
 
-func get_possibilities() -> Dictionary:
+func get_possibilities() -> Array:
 	return possibilities
 
 func collapse() -> void:
-	#var weights = 
-	var key = possibilities.keys().pick_random()
-	var value = possibilities[key]
-	possibilities.clear()
-	possibilities[key] = value
+	#var weights = [tileWeights[possibility] for possibility in self.possibilities]
+	possibilities = [possibilities.pick_random()]
 	entropy = 0
-	set_tile_type(value)
+	set_tile_type(tile_config.tileResources[possibilities[0]])
 
-func constrain(neighbourPossibilities: Dictionary, direction: String) -> bool:
+func constrain(neighbourPossibilities: Array, direction: String) -> bool:
 	var reduced = false
 
 	if entropy > 0:
@@ -88,6 +88,9 @@ func constrain(neighbourPossibilities: Dictionary, direction: String) -> bool:
 				possibilities.erase(possibility)
 				reduced = true
 		
-		entropy = possibilities.size() - 1
+		entropy = possibilities.size()
 	
+	if entropy == 0:
+		printerr("No tile possiblity")
+		set_tile_type(tile_config.tileResources['TILE_FLOOR'])
 	return reduced

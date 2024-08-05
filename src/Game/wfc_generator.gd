@@ -5,7 +5,7 @@ var tile_config = preload("res://assets/definitions/tiles/tile_config.tres")
 
 @export_category("Map Dimensions")
 @export var map_width: int = 80
-@export var map_height: int = 45
+@export var map_height: int = 60
 
 var _rng := RandomNumberGenerator.new()
 
@@ -42,7 +42,7 @@ func getType(x, y):
 	return dungeon.tiles[x][y].possibilities[0]
 
 func getLowestEntropy():
-	var lowestEntropy = tile_config.tileRules.keys().size() - 1
+	var lowestEntropy = tile_config.tileRules.keys().size()
 	for y in map_width:
 		for x in map_height:
 			var tileEntropy = dungeon.tiles[x][y].entropy
@@ -52,11 +52,11 @@ func getLowestEntropy():
 	return lowestEntropy
 
 func getTilesLowestEntropy():
-	var lowestEntropy = tile_config.tileRules.keys().size() - 1
+	var lowestEntropy = tile_config.tileRules.keys().size()
 	var tileList = []
 
-	for y in map_height:
-		for x in map_width:
+	for x in map_width:
+		for y in map_height:
 			var tileEntropy = dungeon.tiles[x][y].entropy
 			if tileEntropy > 0:
 				if tileEntropy < lowestEntropy:
