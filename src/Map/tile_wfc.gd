@@ -81,17 +81,22 @@ func constrain(neighbourPossibilities: Array, direction: String) -> bool:
 			for item in items:
 				connectors.append(item)
 
-		var newPossibilities: Array = []
-		for possibility in possibilities:
-			if possibility in connectors:
-				newPossibilities.append(possibility)
-			else:
+		var opposite
+		if direction == 'NORTH': opposite = 'SOUTH'
+		if direction == 'EAST':  opposite = 'WEST'
+		if direction == 'SOUTH': opposite = 'NORTH'
+		if direction == 'WEST':  opposite = 'EAST'
+		var directionToInt = tile_config.directions[opposite]
+		
+		for possibility in possibilities.duplicate(true):
+			if tile_config.tileRules[possibility][directionToInt] not in connectors:
+				possibilities.erase(possibility)
 				reduced = true
 		
-		possibilities = newPossibilities
 		entropy = possibilities.size()
 	
 	if entropy == 0:
 		printerr("No tile possiblity")
 		set_tile_type(tile_config.tileResources['TILE_GRASS_ONE'])
+		
 	return reduced
