@@ -1,11 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://de800takn1gpn"]
+[gd_scene load_steps=3 format=3 uid="uid://de800takn1gpn"]
 
-[ext_resource type="Script" path="res://src/Game/wfc-test.gd" id="1_bvhdn"]
 [ext_resource type="Script" path="res://src/Utils/camera2d.gd" id="2_wyo27"]
 [ext_resource type="PackedScene" uid="uid://cctlwg8bpbpse" path="res://src/Map/map_wfc.tscn" id="3_qrj7t"]
 
 [node name="Wfc-test" type="Node2D"]
-script = ExtResource("1_bvhdn")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("2_wyo27")

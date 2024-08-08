@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="TileDefinition" load_steps=4 format=3 uid="uid://dtogxnely7rvo"]
+
+[ext_resource type="Script" path="res://src/Map/tile_definition.gd" id="1_yotm5"]
+[ext_resource type="Texture2D" uid="uid://dko5vm7geda2t" path="res://assets/images/monochrome_roads.png" id="2_6edgr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7r1yp"]
+atlas = ExtResource("2_6edgr")
+region = Rect2(16, 0, 16, 16)
+
+[resource]
+script = ExtResource("1_yotm5")
+name = "Sidewalk corner large north east"
+texture = SubResource("AtlasTexture_7r1yp")
+rotation = 90
+color_lit = Color(1, 0.498039, 0, 1)
+color_dark = Color(0.498039, 0.247059, 0, 1)
+is_walkable = true
+is_transparent = true

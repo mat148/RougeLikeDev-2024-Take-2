@@ -4,8 +4,8 @@ class_name WFC_Generator
 var tile_config = preload("res://assets/definitions/tiles/tile_config.tres")
 
 @export_category("Map Dimensions")
-@export var map_width: int = 80
-@export var map_height: int = 60
+@export var map_width: int = 4
+@export var map_height: int = 4
 
 var _rng := RandomNumberGenerator.new()
 
@@ -85,6 +85,7 @@ func waveFunctionCollapse() -> int:
 
 		for direction in directions:
 			var neighbour = tile.get_neighbor(direction)
+			#print('Neighbors: ', neighbour, direction)
 			if neighbour.entropy != 0:
 				var reduced = neighbour.constrain(tilePossibilities, direction)
 				if reduced == true:

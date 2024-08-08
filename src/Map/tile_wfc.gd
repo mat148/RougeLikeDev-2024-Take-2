@@ -34,13 +34,15 @@ func _init(grid_position: Vector2i) -> void:
 	possibilities = tile_config.tileRules.keys()
 	entropy = possibilities.size()
 	#visible = false
-	centered = false
+	#centered = false
 	position = Grid.grid_to_world(grid_position)
 
 func set_tile_type(tile_definition: TileDefinition) -> void:
 	_definition = tile_definition
 	texture = _definition.texture
-	modulate = _definition.color_dark
+	modulate = _definition.color_lit
+	
+	rotation_degrees = _definition.rotation
 
 func is_walkable() -> bool:
 	return _definition.is_walkable
@@ -64,7 +66,9 @@ func collapse() -> void:
 	#var weights = [tileWeights[possibility] for possibility in self.possibilities]
 	possibilities = [possibilities.pick_random()]
 	entropy = 0
-	set_tile_type(tile_config.tileResources[possibilities[0]])
+	var tile = tile_config.tileResources[possibilities[0]]
+	#print('name: ', tile.name)
+	set_tile_type(tile)
 
 func constrain(neighbourPossibilities: Array, direction: String) -> bool:
 	var reduced = false
@@ -73,24 +77,21 @@ func constrain(neighbourPossibilities: Array, direction: String) -> bool:
 		var connectors = []
 		for neighbourPossibility in neighbourPossibilities:
 			var directionToInt = tile_config.directions[direction]
-			connectors.append(tile_config.tileRules[neighbourPossibility][directionToInt])
+			var items: Array = tile_config.tileRules[neighbourPossibility][directionToInt]
+			for item in items:
+				connectors.append(item)
 
-		# check opposite side
-		var opposite
-		if direction == 'NORTH': opposite = 'SOUTH'
-		if direction == 'EAST':  opposite = 'WEST'
-		if direction == 'SOUTH': opposite = 'NORTH'
-		if direction == 'WEST':  opposite = 'EAST'
-
+		var newPossibilities: Array = []
 		for possibility in possibilities:
-			var directionToInt = tile_config.directions[opposite]
-			if tile_config.tileRules[possibility][directionToInt] not in connectors:
-				possibilities.erase(possibility)
+			if possibility in connectors:
+				newPossibilities.append(possibility)
+			else:
 				reduced = true
 		
+		possibilities = newPossibilities
 		entropy = possibilities.size()
 	
 	if entropy == 0:
 		printerr("No tile possiblity")
-		set_tile_type(tile_config.tileResources['TILE_FLOOR'])
+		set_tile_type(tile_config.tileResources['TILE_GRASS_ONE'])
 	return reduced

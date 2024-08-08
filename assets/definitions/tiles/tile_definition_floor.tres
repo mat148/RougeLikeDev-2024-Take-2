@@ -9,7 +9,9 @@ region = Rect2(0, 0, 16, 16)
 
 [resource]
 script = ExtResource("1_sadne")
+name = "Floor"
 texture = SubResource("AtlasTexture_6pdwm")
+rotation = 0
 color_lit = Color(1, 0.498039, 0, 1)
 color_dark = Color(0.498039, 0.247059, 0, 1)
 is_walkable = true

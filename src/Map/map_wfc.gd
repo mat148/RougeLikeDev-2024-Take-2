@@ -12,7 +12,6 @@ var map_data: MapDataWFC
 func _ready() -> void:
 	thread = Thread.new()
 	thread.start(generate)
-	print(thread.wait_to_finish())
 
 func generate() -> void:
 	map_data = await dungeon_generator.generate_dungeon()
@@ -21,7 +20,8 @@ func generate() -> void:
 func _place_tiles() -> void:
 	for x in range(0, map_data.width, 1):
 		for y in range(0, map_data.height, 1):
-			call_deferred("add_child", map_data.tiles[x][y])
+			var tile = map_data.tiles[x][y]
+			call_deferred("add_child", tile)
 
 #func update_fov(player_position: Vector2i) -> void:
 	#field_of_view.update_fov(map_data, player_position, fov_radius)
