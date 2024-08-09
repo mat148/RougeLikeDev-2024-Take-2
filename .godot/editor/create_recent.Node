@@ -1,4 +1,6 @@
-Sprite2D
 Camera2D
+TileMap
+WFC2DGenerator
+Sprite2D
 Node
 Node2D

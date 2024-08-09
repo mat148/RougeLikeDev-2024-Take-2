@@ -72,7 +72,11 @@ func collapse() -> void:
 
 func constrain(neighbourPossibilities: Array, direction: String) -> bool:
 	var reduced = false
-
+	
+	#'TILE_SIDEWALK_WEST'
+	#SOUTH
+	#['TILE_SIDEWALK_WEST', 'TILE_SIDEWALK_CORNER_LARGE_SW'],
+	
 	if entropy > 0:
 		var connectors = []
 		for neighbourPossibility in neighbourPossibilities:
@@ -89,7 +93,16 @@ func constrain(neighbourPossibilities: Array, direction: String) -> bool:
 		var directionToInt = tile_config.directions[opposite]
 		
 		for possibility in possibilities.duplicate(true):
-			if tile_config.tileRules[possibility][directionToInt] not in connectors:
+			var not_found = false
+			var tile_options_array: Array = tile_config.tileRules[possibility][directionToInt]
+			for tile_option in tile_options_array:
+				if tile_option not in connectors:
+					not_found = true
+				else:
+					not_found = false
+					break
+			
+			if not_found:
 				possibilities.erase(possibility)
 				reduced = true
 		

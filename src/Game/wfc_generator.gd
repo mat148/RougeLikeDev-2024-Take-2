@@ -4,8 +4,8 @@ class_name WFC_Generator
 var tile_config = preload("res://assets/definitions/tiles/tile_config.tres")
 
 @export_category("Map Dimensions")
-@export var map_width: int = 4
-@export var map_height: int = 4
+@export var map_width: int = 80
+@export var map_height: int = 60
 
 var _rng := RandomNumberGenerator.new()
 
