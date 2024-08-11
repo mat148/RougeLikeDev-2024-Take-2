@@ -8,7 +8,7 @@ var map_data: MapData
 @onready var field_of_view: FieldOfView = $FieldOfView
 
 func generate(player) -> void:
-	map_data = await dungeon_generator.generate_dungeon(player)
+	map_data = dungeon_generator.generate_dungeon(player)
 	_place_tiles()
 
 func _place_tiles() -> void:

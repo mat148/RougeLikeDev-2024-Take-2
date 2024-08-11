@@ -1,9 +1,6 @@
-res://src/Game/game.tscn
+res://src/Game/grid-test.tscn
 res://assets/definitions/entities/actors/entity_definition_player.tres
 res://assets/definitions/tiles/tile_definition_floor.tres
 res://assets/definitions/tiles/tile_definition_wall.tres
 res://assets/definitions/tiles/tile_definition_tree.tres
-res://src/Map/dungeon_generator.gd
-res://src/Utils/grid.gd
-res://src/Entities/entity.gd
-res://src/Map/tile.gd
+res://src/Game/game-grid.gd
