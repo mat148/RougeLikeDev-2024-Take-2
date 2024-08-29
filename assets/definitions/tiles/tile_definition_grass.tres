@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="TileDefinition" load_steps=4 format=3 uid="uid://2e5tvssfq4wh"]
+
+[ext_resource type="Script" path="res://src/Map/tile_definition.gd" id="1_2ehpn"]
+[ext_resource type="Texture2D" uid="uid://eda6dnpl0wd1" path="res://assets/images/monochrome_packed.png" id="2_5ry2q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ttefu"]
+atlas = ExtResource("2_5ry2q")
+region = Rect2(112, 0, 16, 16)
+
+[resource]
+script = ExtResource("1_2ehpn")
+texture = SubResource("AtlasTexture_ttefu")
+color_lit = Color(1, 1, 1, 1)
+color_dark = Color(0.498039, 0.498039, 0.498039, 1)
+is_walkable = true
+is_transparent = true

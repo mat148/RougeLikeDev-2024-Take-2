@@ -1,7 +1,7 @@
 class_name GameGrid
 extends Node2D
 
-var thread = Thread
+#var thread: Thread
 
 const player_definition: EntityDefinition = preload("res://assets/definitions/entities/actors/entity_definition_player.tres")
 const tile_size = 16
@@ -13,13 +13,14 @@ const tile_size = 16
 @onready var camera: Camera2D = $Camera2D
 
 
-func _ready() -> void:
-	thread = thread.new()
+func _ready() -> void:	
+	#thread = Thread.new()
+	#thread.start(map.generate)
 	#player = Entity.new(Vector2i.ZERO, player_definition)
 	#remove_child(camera)
 	#player.add_child(camera)
 	#entities.add_child(player)
-	map.generate(player)
+	map.generate()
 	#map.update_fov(player.grid_position)
 
 

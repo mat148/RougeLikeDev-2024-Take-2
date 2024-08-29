@@ -2,8 +2,11 @@
 
 dock_1_selected_tab_idx=0
 dock_2_selected_tab_idx=0
+dock_3="Scene,Import"
 dock_3_selected_tab_idx=0
+dock_4="FileSystem"
 dock_4_selected_tab_idx=0
+dock_5="Inspector,Node,History"
 dock_5_selected_tab_idx=0
 dock_6_selected_tab_idx=0
 dock_7_selected_tab_idx=0
@@ -21,24 +24,21 @@ dock_filesystem_file_sort=0
 dock_filesystem_file_list_display_mode=1
 dock_filesystem_selected_paths=PackedStringArray("res://src/Game/")
 dock_filesystem_uncollapsed_paths=PackedStringArray("Favorites", "res://", "res://src/", "res://src/Utils/", "res://src/Map/", "res://src/Map/grid-test/", "res://src/Game/", "res://src/Entities/Actors/Actions/", "res://assets/", "res://assets/images/", "res://assets/definitions/tiles/")
-dock_3="Scene,Import"
-dock_4="FileSystem"
-dock_5="Inspector,Node,History"
 
 [EditorNode]
 
 open_scenes=PackedStringArray("res://src/Game/grid-test.tscn", "res://src/Game/polygon_test.tscn")
 current_scene="res://src/Game/polygon_test.tscn"
 center_split_offset=-541
+selected_bottom_panel_item=0
 selected_default_debugger_tab_idx=0
 selected_main_editor_idx=0
-selected_bottom_panel_item=0
 
 [ScriptEditor]
 
 open_scripts=["res://src/Utils/camera2d.gd", "res://src/Game/game-grid.gd", "res://src/Map/grid-test/grid-generator.gd", "res://src/Map/grid-test/map-data-grid.gd", "res://src/Map/grid-test/map-grid.gd", "res://src/Map/map_data.gd", "res://src/Map/grid-test/object_base.gd", "res://src/Map/grid-test/plot.gd", "res://src/Game/polygon_test.gd", "res://src/Map/grid-test/road.gd", "res://src/Map/grid-test/tile-grid.gd"]
 selected_script="res://src/Game/polygon_test.gd"
-open_help=["Array", "Geometry2D", "Node", "Node2D", "PackedVector2Array", "Polygon2D", "Rect2i", "Transform2D", "Vector2"]
+open_help=["Array", "Geometry2D", "PackedVector2Array", "Polygon2D", "Rect2i", "Vector2"]
 script_split_offset=300
 list_split_offset=0
 

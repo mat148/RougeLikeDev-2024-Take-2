@@ -1,4 +1,4 @@
-list=Array[Dictionary]([{
+list=[{
 "base": &"RefCounted",
 "class": &"Action",
 "icon": "",
@@ -316,4 +316,4 @@ list=Array[Dictionary]([{
 "icon": "",
 "language": &"GDScript",
 "path": "res://addons/wfc/problems/2d/mappers/mapper_2d_tilemap.gd"
-}])
+}]
