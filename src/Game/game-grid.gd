@@ -16,19 +16,19 @@ const tile_size = 16
 func _ready() -> void:	
 	#thread = Thread.new()
 	#thread.start(map.generate)
-	#player = Entity.new(Vector2i.ZERO, player_definition)
-	#remove_child(camera)
-	#player.add_child(camera)
-	#entities.add_child(player)
-	map.generate()
+	player = Entity.new(Vector2i(1, 1), player_definition)
+	remove_child(camera)
+	player.add_child(camera)
+	entities.add_child(player)
+	map.generate(player)
 	#map.update_fov(player.grid_position)
 
 
-#func _physics_process(_delta: float) -> void:
-	#var action: Action = event_handler.get_action()
-	#if action:
-		#var previous_player_position: Vector2i = player.grid_position
-		#action.perform(self, player)
+func _physics_process(_delta: float) -> void:
+	var action: Action = event_handler.get_action()
+	if action:
+		var previous_player_position: Vector2i = player.grid_position
+		action.perform(self, player)
 		#if player.grid_position != previous_player_position:
 			#map.update_fov(player.grid_position)
 

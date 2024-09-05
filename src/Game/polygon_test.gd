@@ -5,25 +5,19 @@ extends Node2D
 
 @export var polygon3: Polygon2D
 
-func _ready() -> void:
-	print(polygon1.polygon)
-	print(polygon2.polygon)
-	
-	var transformed_polygon_1 = polygon1.transform * polygon1.polygon
-	polygon1.transform = Transform2D.IDENTITY
-	polygon1.polygon = transformed_polygon_1
-	
-	var transformed_polygon_2 = polygon2.transform * polygon2.polygon
-	polygon2.transform = Transform2D.IDENTITY
-	polygon2.polygon = transformed_polygon_2
-	
-	var merged_polygon = Geometry2D.merge_polygons(polygon1.polygon, polygon2.polygon)
-	
-	polygon3.polygon = merged_polygon[0]
-	print(merged_polygon)
-	
-	#var result = Geometry2D.merge_polygons(polygon1.polygon, polygon2.polygon)
-	#print(result)
+#func _ready() -> void:
+	#print(polygon1.polygon)
+	#print(polygon2.polygon)
 	#
-	#polygon3.polygon = result[0]
-	#polygon3.transform.basis_xform(polygon2.position)
+	#var transformed_polygon_1 = polygon1.transform * polygon1.polygon
+	#polygon1.transform = Transform2D.IDENTITY
+	#polygon1.polygon = transformed_polygon_1
+	#
+	#var transformed_polygon_2 = polygon2.transform * polygon2.polygon
+	#polygon2.transform = Transform2D.IDENTITY
+	#polygon2.polygon = transformed_polygon_2
+	#
+	#var merged_polygon = Geometry2D.merge_polygons(polygon1.polygon, polygon2.polygon)
+	#
+	#polygon3.polygon = merged_polygon[0]
+	#print(merged_polygon)

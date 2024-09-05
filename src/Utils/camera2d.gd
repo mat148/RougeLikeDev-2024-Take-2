@@ -7,9 +7,9 @@ extends Camera2D
 	## Enable camera to follow the player or any target
 	#current = true
 
-func _process(delta):
-	handle_panning(delta)
-	handle_zooming()
+#func _process(delta):
+	#handle_panning(delta)
+	#handle_zooming()
 
 func handle_panning(delta):
 	var pan_direction = Vector2()

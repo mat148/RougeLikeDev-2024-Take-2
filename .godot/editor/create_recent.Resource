@@ -1,3 +1,5 @@
 TileDefinition
+TileConfig
+TileGroup
 TileSet
 EntityDefinition

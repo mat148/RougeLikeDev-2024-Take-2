@@ -8,11 +8,11 @@ func _init(dx: int, dy: int) -> void:
 	offset = Vector2i(dx, dy)
 
 
-func perform(game: Game, entity: Entity) -> void:
+func perform(game: GameGrid, entity: Entity) -> void:
 	var destination: Vector2i = entity.grid_position + offset
 	
-	var map_data: MapData = game.get_map_data()
-	var destination_tile: Tile = map_data.get_tile(destination)
+	var map_data: MapDataGrid = game.get_map_data()
+	var destination_tile: TileGrid = map_data.get_tile(destination)
 	if not destination_tile or not destination_tile.is_walkable():
 		return
 	entity.move(offset)

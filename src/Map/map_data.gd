@@ -2,9 +2,9 @@ class_name MapData
 extends RefCounted
 
 const tile_types = {
-	"floor": preload("res://assets/definitions/tiles/tile_definition_floor.tres"),
-	"wall": preload("res://assets/definitions/tiles/tile_definition_wall.tres"),
-	"tree": preload("res://assets/definitions/tiles/tile_definition_tree.tres"),
+	"floor": preload("res://assets/definitions/tiles/individual_tiles/tile_definition_floor.tres"),
+	"wall": preload("res://assets/definitions/tiles/individual_tiles/tile_definition_wall_1.tres"),
+	"tree": preload("res://assets/definitions/tiles/individual_tiles/tile_definition_tree_1.tres"),
 }
 
 var area: Rect2i

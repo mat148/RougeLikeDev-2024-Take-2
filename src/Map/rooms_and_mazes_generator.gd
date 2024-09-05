@@ -123,7 +123,7 @@ func _growMaze(start: Vector2i) -> void:
 		var cell = cells.back()
 		var lastDir
 		
-		print('cell: ', cell)
+		#print('cell: ', cell)
 		
 		# See which adjacent cells are open.
 		var unmadeCells: Array[Vector2i] = [];
@@ -152,7 +152,7 @@ func _growMaze(start: Vector2i) -> void:
 				#print('move direction: ', move_dir)
 			
 			var cell_to_carve = cell + move_dir
-			print('carve cell: ', cell_to_carve)
+			#print('carve cell: ', cell_to_carve)
 			await _carve_tile(cell_to_carve, 0.03, 'tree')
 			#cell_to_carve = cell + move_dir * 2
 			#print('carve cell 2: ', cell_to_carve)
