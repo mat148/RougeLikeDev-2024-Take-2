@@ -86,9 +86,6 @@ func generate_dungeon(player: Entity) -> MapDataGrid:
 					
 					_carve_area_polygon(dungeon, area)
 	
-	for x in map_width:
-		_carve_tile(dungeon, x, 0, 1, TileConfig.tile_names.wall_1)
-	
 	return dungeon
 
 func _carve_tile(dungeon: MapDataGrid, x: int, y: int, z: int, tile_type: int = TileConfig.tile_names.air, tile_rotation: int = 0) -> void:
