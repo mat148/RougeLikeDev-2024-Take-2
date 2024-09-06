@@ -3,7 +3,7 @@ class_name Plot
 
 var plot_count: int = 1
 
-func _init(polygonArray: PackedVector2Array, new_position: Vector2i) -> void:
+func _init(polygonArray: PackedVector2Array, new_position: Vector3i) -> void:
 	name = 'Plot'
 	position = new_position
 	polygon = Polygon2D.new()

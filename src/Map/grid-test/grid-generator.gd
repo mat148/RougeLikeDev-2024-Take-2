@@ -11,7 +11,7 @@ var directions = [
 @export_category("Map Dimensions")
 @export var map_width: int = 132
 @export var map_height: int = 132
-@export var map_depth: int = 132
+@export var map_depth: int = 11
 
 @export_category("Rooms RNG")
 @export var max_rooms: int = 30
@@ -44,49 +44,55 @@ func generate_dungeon(player: Entity) -> MapDataGrid:
 	
 	for y: int in calc_plot_height:
 		for x: int in calc_plot_width:
-			var check_x: int = x % 2
-			var check_y: int = y % 2
-			
-			var location = Vector2i(x, y) * plot_size
-			var area
-			var points = [
-				location,
-				Vector2i(location.x + plot_size, location.y),
-				Vector2i(location.x + plot_size, location.y + plot_size),
-				Vector2i(location.x, location.y + plot_size),
-			]
-			if check_y == 1:
-				if check_x == 0:
-					area = Road.new(
-						points,
-						Vector2i.LEFT,
-						location
-					)
-				else:
-					area = Road.new(
-						points,
-						Vector2i.ZERO,
-						location
-					)
-			else:
-				if (x + y) % 2 == 0:
-					area = Plot.new(
-						points,
-						location
-					)
-				else:
-					area = Road.new(
-						points,
-						Vector2i.UP,
-						location
-					)
-			
-			_carve_area_polygon(dungeon, area)
-			
+			for z: int in map_depth:
+				if z == 0:
+					var check_x: int = x % 2
+					var check_y: int = y % 2
+					
+					var location = Vector3i(x * plot_size, y * plot_size, z)
+					
+					var area
+					var points = [
+						Vector2i(location.x, location.y),
+						Vector2i(location.x + plot_size, location.y),
+						Vector2i(location.x + plot_size, location.y + plot_size),
+						Vector2i(location.x, location.y + plot_size),
+					]
+					if check_y == 1:
+						if check_x == 0:
+							area = Road.new(
+								points,
+								Vector2i.LEFT,
+								location
+							)
+						else:
+							area = Road.new(
+								points,
+								Vector2i.ZERO,
+								location
+							)
+					else:
+						if (x + y) % 2 == 0:
+							area = Plot.new(
+								points,
+								location
+							)
+						else:
+							area = Road.new(
+								points,
+								Vector2i.UP,
+								location
+							)
+					
+					_carve_area_polygon(dungeon, area)
+	
+	for x in map_width:
+		_carve_tile(dungeon, x, 0, 1, TileConfig.tile_names.wall_1)
+	
 	return dungeon
 
-func _carve_tile(dungeon: MapDataGrid, x: int, y: int, tile_type: int = TileConfig.tile_names.air, tile_rotation: int = 0) -> void:
-	var tile_position = Vector2i(x, y)
+func _carve_tile(dungeon: MapDataGrid, x: int, y: int, z: int, tile_type: int = TileConfig.tile_names.air, tile_rotation: int = 0) -> void:
+	var tile_position = Vector3i(x, y, z)
 	var tile: TileGrid = dungeon.get_tile(tile_position)
 	tile.tile_rotation = tile_rotation
 	if dungeon.tile_config.has_tile_type(tile_type):
@@ -108,60 +114,20 @@ func _carve_area_polygon(dungeon, area) -> void:
 	var max_x = min_max.max_x
 	var min_y = min_max.min_y
 	var max_y = min_max.max_y
+	var z = area.position.z
 	
 	if area_name == 'Plot':
-		_place_area(dungeon, TileConfig.tile_group_names.plot_group, min_x, min_y)
-		#for y in range(min_y, max_y):
-			#for x in range(min_x, max_x):
-				#var tile_pos = Vector2i(x, y)
-				#if area._is_point_in_polygon(tile_pos):
-					#_carve_tile(dungeon, x, y)
+		_place_area(dungeon, TileConfig.tile_group_names.plot_group, min_x, min_y, z)
 	
 	if area_name == 'Road':
 		if area.direction == Vector2i.ZERO:
-			_place_area(dungeon, TileConfig.tile_group_names.center_road_group, min_x, min_y)
+			_place_area(dungeon, TileConfig.tile_group_names.center_road_group, min_x, min_y, z)
 		if area.direction == Vector2i.UP || area.direction == Vector2i.DOWN:
-			_place_area(dungeon, TileConfig.tile_group_names.vertical_road_group, min_x, min_y)
+			_place_area(dungeon, TileConfig.tile_group_names.vertical_road_group, min_x, min_y, z)
 		if area.direction == Vector2i.LEFT || area.direction == Vector2i.RIGHT:
-			_place_area(dungeon, TileConfig.tile_group_names.horizontal_road_group, min_x, min_y)
+			_place_area(dungeon, TileConfig.tile_group_names.horizontal_road_group, min_x, min_y, z)
 
-#func _place_horizontal_road(dungeon: MapDataGrid, min_x: int, max_x: int, min_y: int) -> void:
-	#for x in range(min_x, max_x):
-		#_carve_tile(dungeon, x, min_y, 'tree_1')
-		#_carve_tile(dungeon, x, min_y + 1, 'tree_1')
-		#_carve_tile(dungeon, x, min_y + 2, 'wall_1')
-		#
-		#_carve_tile(dungeon, x, min_y + 3, 'grass_1')
-		#_carve_tile(dungeon, x, min_y + 4, 'grass_1')
-		#
-		#_carve_tile(dungeon, x, min_y + 5, 'tree_1')
-		#
-		#_carve_tile(dungeon, x, min_y + 6, 'grass_1')
-		#_carve_tile(dungeon, x, min_y + 7, 'grass_1')
-		#
-		#_carve_tile(dungeon, x, min_y + 8, 'wall_1')
-		#_carve_tile(dungeon, x, min_y + 9, 'tree_1')
-		#_carve_tile(dungeon, x, min_y + 10, 'tree_1')
-
-#func _place_vertical_road(dungeon: MapDataGrid, min_y: int, max_y: int, min_x: int) -> void:
-	#for y in range(min_y, max_y):
-		#_carve_tile(dungeon, min_x, y, 'tree_1')
-		#_carve_tile(dungeon, min_x + 1, y, 'tree_1')
-		#_carve_tile(dungeon, min_x + 2, y, 'wall_1')
-		#
-		#_carve_tile(dungeon, min_x + 3, y, 'grass_1')
-		#_carve_tile(dungeon, min_x + 4, y, 'grass_1')
-		#
-		#_carve_tile(dungeon, min_x + 5, y, 'tree_1')
-		#
-		#_carve_tile(dungeon, min_x + 6, y, 'grass_1')
-		#_carve_tile(dungeon, min_x + 7, y, 'grass_1')
-		#
-		#_carve_tile(dungeon, min_x + 8, y, 'wall_1')
-		#_carve_tile(dungeon, min_x + 9, y, 'tree_1')
-		#_carve_tile(dungeon, min_x + 10, y, 'tree_1')
-
-func _place_area(dungeon: MapDataGrid, tile_group_name: int, min_x: int, min_y: int) -> void:
+func _place_area(dungeon: MapDataGrid, tile_group_name: int, min_x: int, min_y: int, z: int) -> void:
 	var tile_group_reference: PackedScene
 	if dungeon.tile_config.has_tile_group(tile_group_name):
 		tile_group_reference = dungeon.tile_config.get_tile_group(tile_group_name)
@@ -180,6 +146,6 @@ func _place_area(dungeon: MapDataGrid, tile_group_name: int, min_x: int, min_y: 
 			else:
 				tileType = TileConfig.tile_names.grass_1
 			
-			_carve_tile(dungeon, min_x + x, min_y+ y, tileType, alternative_tile)
+			_carve_tile(dungeon, min_x + x, min_y+ y, z, tileType, alternative_tile)
 	
 	tile_group_temp.queue_free()

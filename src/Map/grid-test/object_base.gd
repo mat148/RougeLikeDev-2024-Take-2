@@ -3,7 +3,7 @@ class_name BaseObject
 
 var name: String = ""
 var polygon: Polygon2D
-var position: Vector2
+var position: Vector3
 
 func get_bounding_box() -> Dictionary:
 	var points: PackedVector2Array = polygon.polygon

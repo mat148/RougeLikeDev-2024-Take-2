@@ -4,6 +4,7 @@ extends Sprite2D
 @export var _definition: TileDefinition
 @export var is_walkway: bool = false
 @export var tile_rotation: int = 0
+var grid_position: Vector3
 
 var is_explored: bool = false:
 	set(value):
@@ -21,7 +22,7 @@ var is_in_view: bool = false:
 func _init(grid_position: Vector3i, tile_definition: TileDefinition) -> void:
 	#visible = false
 	centered = false
-	position = Grid.grid_to_world(grid_position)
+	grid_position = Grid.grid_to_world(grid_position)
 	set_tile_type(tile_definition)
 
 

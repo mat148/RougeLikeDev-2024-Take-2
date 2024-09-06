@@ -1,16 +1,6 @@
-[gd_resource type="Resource" script_class="TileConfig" load_steps=6 format=3 uid="uid://be63b8ne0pcap"]
+[gd_resource type="Resource" script_class="TileConfig" load_steps=2 format=3 uid="uid://be63b8ne0pcap"]
 
 [ext_resource type="Script" path="res://src/Map/tile_config.gd" id="1_q1id8"]
-[ext_resource type="PackedScene" uid="uid://boba0bce4mpwf" path="res://assets/definitions/tiles/tile_groups/center_road_definition.tscn" id="13_b4lep"]
-[ext_resource type="PackedScene" uid="uid://dmlnn8weym3sr" path="res://assets/definitions/tiles/tile_groups/horizontal_road_definition.tscn" id="14_vg60u"]
-[ext_resource type="PackedScene" uid="uid://b7wopak8gmgg2" path="res://assets/definitions/tiles/tile_groups/vertical_road_definition.tscn" id="15_4stt8"]
-[ext_resource type="PackedScene" uid="uid://bayf6kaaef28o" path="res://assets/definitions/tiles/tile_groups/plot_definition.tscn" id="16_ybt80"]
 
 [resource]
 script = ExtResource("1_q1id8")
-tile_groups = {
-"center_road_definition": ExtResource("13_b4lep"),
-"horizontal_road_definition": ExtResource("14_vg60u"),
-"plot_definition": ExtResource("16_ybt80"),
-"vertical_road_definition": ExtResource("15_4stt8")
-}

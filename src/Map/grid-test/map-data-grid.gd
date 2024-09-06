@@ -18,14 +18,17 @@ func _init(map_width: int, map_height: int, map_depth: int) -> void:
 	_setup_tiles()
 
 
-func _setup_tiles() -> void:
+func _setup_tiles() -> void:	
 	tiles = []
 	for x in range(0, width, 1):
-		tiles.append([]);
+		var tiles_2d = []
 		for y in range(0, height, 1):
+			var tiles_1d = []
 			for z in range(0, depth, 1):
 				var tile := TileGrid.new(Vector3i(x, y, z), tile_config.get_tile_defininition(TileConfig.tile_names.air))
-				tiles[x].append(tile);
+				tiles_1d.append(tile)
+			tiles_2d.append(tiles_1d)
+		tiles.append(tiles_2d)
 
 func is_tile_in_bounds(tile: TileGrid) -> bool:
 	return tiles.has(tile)
@@ -38,13 +41,8 @@ func is_in_bounds(coordinate: Vector2i) -> bool:
 		and coordinate.y < height
 	)
 
-
-func get_tile(grid_position: Vector2i) -> TileGrid:
-	#var tile_index: int = grid_to_index(grid_position)
-	#if tile_index == -1:
-		#return null
-	return tiles[grid_position.x][grid_position.y]
-
+func get_tile(grid_position: Vector3i) -> TileGrid:
+	return tiles[grid_position.x][grid_position.y][grid_position.z]
 
 func grid_to_index(grid_position: Vector2i) -> int:
 	if not is_in_bounds(grid_position):
