@@ -15,21 +15,20 @@ var is_explored: bool = false:
 var is_in_view: bool = false:
 	set(value):
 		is_in_view = value
-		modulate = _definition.color_lit if is_in_view else _definition.color_dark
+		texture = _definition.lit_texture if is_in_view else _definition.dark_texture
 		if is_in_view and not is_explored:
 			is_explored = true
 
-func _init(grid_position: Vector3i, tile_definition: TileDefinition) -> void:
-	#visible = false
+func _init(new_grid_position: Vector3i, tile_definition: TileDefinition) -> void:
+	visible = false
 	centered = false
-	grid_position = Grid.grid_to_world(grid_position)
+	grid_position = Grid.grid_to_world(new_grid_position)
 	set_tile_type(tile_definition)
 
 
 func set_tile_type(tile_definition: TileDefinition) -> void:
 	_definition = tile_definition
-	texture = _definition.texture
-	modulate = _definition.color_dark
+	texture = _definition.lit_texture
 
 
 func is_walkable() -> bool:

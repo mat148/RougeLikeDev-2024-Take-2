@@ -54,25 +54,25 @@ const tile_groups: Dictionary = {
 }
 
 const tile_atlas_to_type = {
-	Vector2i(0, 0): tile_names.blank,
-	Vector2i(1, 0): tile_names.grass_1,
-	Vector2i(7, 0): tile_names.grass_4,
+	Vector2i(1, 0): tile_names.blank,
+	Vector2i(3, 0): tile_names.grass_1,
+	Vector2i(10, 0): tile_names.grass_4,
 	
 	Vector2i(0, 1): tile_names.tree_1,
 	
-	Vector2i(2, 9): tile_names.door_1,
+	Vector2i(2, 3): tile_names.door_1,
 	
-	Vector2i(10, 17): tile_names.wall_1,
+	Vector2i(13, 2): tile_names.wall_1,
 	
-	Vector2i(13, 0): tile_names.road_edge,
+	Vector2i(12, 0): tile_names.road_edge,
 	
-	Vector2i(13, 1): tile_names.road_median_lines,
-	Vector2i(14, 1): tile_names.road_median_lines_corner,
-	Vector2i(15, 1): tile_names.road_median_lines_t,
-	Vector2i(16, 1): tile_names.road_median_lines_cross,
+	Vector2i(9, 1): tile_names.road_median_lines,
+	Vector2i(11, 1): tile_names.road_median_lines_corner,
+	Vector2i(13, 1): tile_names.road_median_lines_t,
+	Vector2i(15, 1): tile_names.road_median_lines_cross,
 	
-	Vector2i(7, 3): tile_names.sidewalk_edge,
-	Vector2i(8, 3): tile_names.sidewalk_corner_large,
+	Vector2i(7, 2): tile_names.sidewalk_edge,
+	Vector2i(9, 2): tile_names.sidewalk_corner_large,
 }
 
 func get_tile_defininition(tile: int) -> TileDefinition:

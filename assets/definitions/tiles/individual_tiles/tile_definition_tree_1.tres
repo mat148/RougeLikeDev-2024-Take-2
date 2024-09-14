@@ -1,18 +1,20 @@
-[gd_resource type="Resource" script_class="TileDefinition" load_steps=4 format=3 uid="uid://dpg0plio8gupw"]
+[gd_resource type="Resource" script_class="TileDefinition" load_steps=5 format=3 uid="uid://dpg0plio8gupw"]
 
+[ext_resource type="Texture2D" uid="uid://dm23tu5vweu5w" path="res://assets/images/tiles.png" id="1_f8olq"]
 [ext_resource type="Script" path="res://src/Map/tile_definition.gd" id="1_ma4kv"]
-[ext_resource type="Texture2D" uid="uid://eda6dnpl0wd1" path="res://assets/images/monochrome_packed.png" id="2_4645g"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_oei0g"]
-resource_local_to_scene = true
-atlas = ExtResource("2_4645g")
+[sub_resource type="AtlasTexture" id="AtlasTexture_akjg0"]
+atlas = ExtResource("1_f8olq")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bf8dn"]
+atlas = ExtResource("1_f8olq")
 region = Rect2(0, 16, 16, 16)
 
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_ma4kv")
-texture = SubResource("AtlasTexture_oei0g")
-color_lit = Color(1, 0.498039, 0, 1)
-color_dark = Color(0.498039, 0.247059, 0, 1)
+lit_texture = SubResource("AtlasTexture_bf8dn")
+dark_texture = SubResource("AtlasTexture_akjg0")
 is_walkable = true
 is_transparent = true

@@ -11,7 +11,7 @@ var directions = [
 @export_category("Map Dimensions")
 @export var map_width: int = 132
 @export var map_height: int = 132
-@export var map_depth: int = 11
+@export var map_depth: int = 15
 
 @export_category("Rooms RNG")
 @export var max_rooms: int = 30
@@ -30,7 +30,7 @@ var road_size: int = 11
 func _ready() -> void:
 	_rng.randomize()
 
-func generate_dungeon(player: Entity) -> MapDataGrid:
+func generate_dungeon(_player: Entity) -> MapDataGrid:
 	# Check if map_width and map_height are divisible by plot_size
 	if map_width % (plot_size) != 0:
 		printerr("Error: map_width must be divisible by the plot_size of ", plot_size)
@@ -86,6 +86,10 @@ func generate_dungeon(player: Entity) -> MapDataGrid:
 					
 					_carve_area_polygon(dungeon, area)
 	
+	#for y: int in map_height:
+		#for x: int in map_width:
+			#_carve_tile(dungeon, x, y, 1, TileConfig.tile_names.wall_1)
+	
 	return dungeon
 
 func _carve_tile(dungeon: MapDataGrid, x: int, y: int, z: int, tile_type: int = TileConfig.tile_names.air, tile_rotation: int = 0) -> void:
@@ -97,20 +101,13 @@ func _carve_tile(dungeon: MapDataGrid, x: int, y: int, z: int, tile_type: int = 
 	else:
 		tile.set_tile_type(dungeon.tile_config.get_tile_defininition(TileConfig.tile_names.air))
 
-#func _carve_room(dungeon: MapDataGrid, room) -> void:
-	#var plot: Rect2i = room.rect2D
-	#var inner: Rect2i = plot.grow(-1)
-	#for y in range(plot.position.y, plot.end.y + 1):
-		#for x in range(plot.position.x, plot.end.x + 1):
-			#_carve_tile(dungeon, x, y)
-
 func _carve_area_polygon(dungeon, area) -> void:
 	var area_name = area.name
 	var min_max = area.get_bounding_box()
 	var min_x = min_max.min_x
-	var max_x = min_max.max_x
+	var _max_x = min_max.max_x
 	var min_y = min_max.min_y
-	var max_y = min_max.max_y
+	var _max_y = min_max.max_y
 	var z = area.position.z
 	
 	if area_name == 'Plot':

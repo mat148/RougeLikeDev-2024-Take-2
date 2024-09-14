@@ -1,5 +1,4 @@
 res://src/Game/grid-test.tscn
-res://assets/definitions/entities/actors/entity_definition_player.tres
 res://assets/definitions/tiles/individual_tiles/tile_definition_air.tres
 res://assets/definitions/tiles/individual_tiles/tile_definition_blank.tres
 res://assets/definitions/tiles/individual_tiles/tile_definition_grass_1.tres
@@ -15,16 +14,5 @@ res://assets/definitions/tiles/individual_tiles/tile_definition_road_median_line
 res://assets/definitions/tiles/individual_tiles/tile_definition_sidewalk_edge.tres
 res://assets/definitions/tiles/individual_tiles/tile_definition_sidewalk_corner_large.tres
 res://assets/definitions/tiles/tile_config.tres
-res://src/Utils/grid.gd
-res://src/Map/grid-test/tile-grid.gd
-res://src/Map/grid-test/map-data-grid.gd
+res://assets/definitions/entities/actors/entity_definition_player.tres
 res://src/Map/grid-test/grid-generator.gd
-res://src/Entities/entity.gd
-res://src/Game/game-grid.gd
-res://src/Entities/Actors/Actions/movement_action.gd
-res://src/Game/event_handler.gd
-res://src/Map/grid-test/map-grid.gd
-res://src/Map/grid-test/object_base.gd
-res://src/Map/grid-test/plot.gd
-res://src/Map/grid-test/road.gd
-res://assets/definitions/tiles/individual_tiles/tile_definition_floor.tres

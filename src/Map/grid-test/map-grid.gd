@@ -7,7 +7,7 @@ extends Node2D
 
 var map_data: MapDataGrid
 @onready var dungeon_generator: GridGenerator = $DungeonGenerator
-#@onready var field_of_view: FieldOfView = $FieldOfView
+@onready var field_of_view: FieldOfView = $FieldOfView
 
 enum TileTransform {
 	ROTATE_0 = 0,
@@ -28,16 +28,20 @@ func _place_tiles() -> void:
 			for z in range(0, map_data.depth, 1):
 				if x == 0 && y == 0:
 					tileMap.add_layer(z)
+					tileMap.set_layer_name(z, str(z))
 					tileMap.set_layer_z_index(z, z)
 				var tile = map_data.get_tile(Vector3i(x, y, z))
 				var tile_rotation = tile.tile_rotation
 				var tile_definition: TileDefinition = tile._definition
-				var tile_texture: AtlasTexture = tile_definition.texture
+				var tile_texture: AtlasTexture = tile_definition.dark_texture
 				var tile_region: Rect2i = tile_texture.region
 				var atlas_coords: Vector2i = tile_region.position / 16
+				var tile_visibliity: bool = tile.visible
 				
-				tileMap.set_cell(z, Vector2i(x, y), 0, atlas_coords, tile_rotation)
-				#call_deferred("add_child", map_data.tiles[x][y])
+				if tile_visibliity:
+					tileMap.set_cell(z, Vector2i(x, y), 0, atlas_coords, tile_rotation)
+				else:
+					tileMap.set_cell(z, Vector2i(x, y), 0, Vector2i(-1, -1), tile_rotation)
 
-#func update_fov(player_position: Vector2i) -> void:
-	#field_of_view.update_fov(map_data, player_position, fov_radius)
+func update_fov(player_position: Vector3i) -> void:
+	field_of_view.update_fov(map_data, player_position, fov_radius)
