@@ -1,6 +1,5 @@
-Node
 Node2D
-Sprite2D
-TileMap
-Polygon2D
-Camera2D
+Label
+Button
+Control
+CanvasLayer

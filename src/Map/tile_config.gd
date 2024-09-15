@@ -29,21 +29,21 @@ enum tile_group_names {
 #@export var tile_atlas_to_type: Dictionary
 #@export var tile_groups: Dictionary
 
-const tile_definitions: Dictionary = {
-	tile_names.air: preload("res://assets/definitions/tiles/individual_tiles/tile_definition_air.tres"),
-	tile_names.blank: preload("res://assets/definitions/tiles/individual_tiles/tile_definition_blank.tres"),
-	tile_names.grass_1: preload("res://assets/definitions/tiles/individual_tiles/tile_definition_grass_1.tres"),
-	tile_names.grass_4: preload("res://assets/definitions/tiles/individual_tiles/tile_definition_grass_4.tres"),
-	tile_names.tree_1: preload("res://assets/definitions/tiles/individual_tiles/tile_definition_tree_1.tres"),
-	tile_names.door_1: preload("res://assets/definitions/tiles/individual_tiles/tile_definition_door_1.tres"),
-	tile_names.wall_1: preload("res://assets/definitions/tiles/individual_tiles/tile_definition_wall_1.tres"),
-	tile_names.road_edge: preload("res://assets/definitions/tiles/individual_tiles/tile_definition_road_edge.tres"),
-	tile_names.road_median_lines: preload("res://assets/definitions/tiles/individual_tiles/tile_definition_road_median_lines.tres"),
-	tile_names.road_median_lines_corner: preload("res://assets/definitions/tiles/individual_tiles/tile_definition_road_median_lines_corner.tres"),
-	tile_names.road_median_lines_t: preload("res://assets/definitions/tiles/individual_tiles/tile_definition_road_median_lines_t.tres"),
-	tile_names.road_median_lines_cross: preload("res://assets/definitions/tiles/individual_tiles/tile_definition_road_median_lines_cross.tres"),
-	tile_names.sidewalk_edge: preload("res://assets/definitions/tiles/individual_tiles/tile_definition_sidewalk_edge.tres"),
-	tile_names.sidewalk_corner_large: preload("res://assets/definitions/tiles/individual_tiles/tile_definition_sidewalk_corner_large.tres")
+var tile_definitions: Dictionary = {
+	tile_names.air: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_air.tres"),
+	tile_names.blank: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_blank.tres"),
+	tile_names.grass_1: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_grass_1.tres"),
+	tile_names.grass_4: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_grass_4.tres"),
+	tile_names.tree_1: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_tree_1.tres"),
+	tile_names.door_1: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_door_1.tres"),
+	tile_names.wall_1: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_wall_1.tres"),
+	tile_names.road_edge: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_road_edge.tres"),
+	tile_names.road_median_lines: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_road_median_lines.tres"),
+	tile_names.road_median_lines_corner: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_road_median_lines_corner.tres"),
+	tile_names.road_median_lines_t: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_road_median_lines_t.tres"),
+	tile_names.road_median_lines_cross: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_road_median_lines_cross.tres"),
+	tile_names.sidewalk_edge: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_sidewalk_edge.tres"),
+	tile_names.sidewalk_corner_large: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_sidewalk_corner_large.tres")
 }
 
 const tile_groups: Dictionary = {

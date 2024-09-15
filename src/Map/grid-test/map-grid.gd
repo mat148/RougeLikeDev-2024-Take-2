@@ -8,6 +8,7 @@ extends Node2D
 var map_data: MapDataGrid
 @onready var dungeon_generator: GridGenerator = $DungeonGenerator
 @onready var field_of_view: FieldOfView = $FieldOfView
+@onready var entities: Node2D = %Entities
 
 enum TileTransform {
 	ROTATE_0 = 0,
@@ -19,8 +20,7 @@ enum TileTransform {
 func generate(player: Entity) -> void:
 	map_data = dungeon_generator.generate_dungeon(player)
 	_place_tiles()
-	
-	#return map_data
+	_place_entities()
 
 func _place_tiles() -> void:
 	for x in range(0, map_data.width, 1):
@@ -43,5 +43,12 @@ func _place_tiles() -> void:
 				else:
 					tileMap.set_cell(z, Vector2i(x, y), 0, Vector2i(-1, -1), tile_rotation)
 
+func _place_entities() -> void:
+	for entity in map_data.entities:
+		entities.add_child(entity)
+
 func update_fov(player_position: Vector3i) -> void:
 	field_of_view.update_fov(map_data, player_position, fov_radius)
+	
+	for entity in map_data.entities:
+		entity.visible = map_data.get_tile(entity.grid_position).is_in_view

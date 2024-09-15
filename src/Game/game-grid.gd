@@ -8,7 +8,6 @@ const tile_size = 16
 
 @onready var player: Entity
 @onready var event_handler: EventHandler = $EventHandler
-@onready var entities: Node2D = $Entities
 @onready var map: MapGrid = $Map
 @onready var camera: Camera2D = $Camera2D
 
@@ -16,10 +15,10 @@ const tile_size = 16
 func _ready() -> void:	
 	#thread = Thread.new()
 	#thread.start(map.generate)
-	player = Entity.new(Vector3i(1, 1, 0), player_definition)
+	player = Entity.new(Vector3i.ZERO, player_definition)
 	remove_child(camera)
 	player.add_child(camera)
-	entities.add_child(player)
+	#entities.add_child(player)
 	map.generate(player)
 	map.update_fov(player.grid_position)
 
