@@ -2,6 +2,7 @@ class_name Entity
 extends Sprite2D
 
 var _definition: EntityDefinition
+var map_data: MapDataGrid
 
 var grid_position: Vector3i:
 	set(value):
@@ -9,9 +10,11 @@ var grid_position: Vector3i:
 		var grid_to_world_position = Grid.grid_to_world(grid_position)
 		position = Vector2(grid_to_world_position.x, grid_to_world_position.y)
 
-func _init(start_position: Vector3i, entity_definition: EntityDefinition) -> void:
+func _init(map_data: MapDataGrid, start_position: Vector3i, entity_definition: EntityDefinition) -> void:
 	centered = false
+	visible = false
 	grid_position = start_position
+	self.map_data = map_data
 	set_entity_type(entity_definition)
 
 func move(move_offset: Vector3i) -> void:

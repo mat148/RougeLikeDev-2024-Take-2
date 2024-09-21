@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://b6ju7txbd0jmm"]
+[gd_scene load_steps=12 format=3 uid="uid://b6ju7txbd0jmm"]
 
 [ext_resource type="Script" path="res://src/Game/game-grid.gd" id="1_waual"]
-[ext_resource type="Script" path="res://src/Game/event_handler.gd" id="2_3c0q4"]
+[ext_resource type="Script" path="res://src/Game/input_handler.gd" id="2_3c0q4"]
 [ext_resource type="Script" path="res://src/Map/grid-test/map-grid.gd" id="3_xvve8"]
 [ext_resource type="Script" path="res://src/Map/grid-test/grid-generator.gd" id="4_kpdul"]
 [ext_resource type="Script" path="res://src/Map/field_of_view.gd" id="6_hh6ja"]
+[ext_resource type="PackedScene" uid="uid://ct8y7d8iqoh7w" path="res://assets/definitions/tiles/grass.tscn" id="7_a0r3n"]
 [ext_resource type="Texture2D" uid="uid://dm23tu5vweu5w" path="res://assets/images/tiles.png" id="7_lxkmm"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_hagg5"]
@@ -47,13 +48,15 @@ texture = ExtResource("7_lxkmm")
 14:1/0 = 0
 15:1/0 = 0
 16:1/0 = 0
+0:2/animation_columns = 7
+0:2/animation_frame_0/duration = 1.0
+0:2/animation_frame_1/duration = 1.0
+0:2/animation_frame_2/duration = 1.0
+0:2/animation_frame_3/duration = 1.0
+0:2/animation_frame_4/duration = 1.0
+0:2/animation_frame_5/duration = 1.0
+0:2/animation_frame_6/duration = 1.0
 0:2/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-3:2/0 = 0
-4:2/0 = 0
-5:2/0 = 0
-6:2/0 = 0
 7:2/0 = 0
 8:2/0 = 0
 9:2/0 = 0
@@ -71,8 +74,12 @@ texture = ExtResource("7_lxkmm")
 2:3/0 = 0
 3:3/0 = 0
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_3at5l"]
+scenes/0/scene = ExtResource("7_a0r3n")
+
 [sub_resource type="TileSet" id="TileSet_mm4tc"]
 sources/0 = SubResource("TileSetAtlasSource_aibf8")
+sources/1 = SubResource("TileSetScenesCollectionSource_3at5l")
 pattern_0 = SubResource("TileMapPattern_hagg5")
 
 [node name="Grid Test" type="Node2D"]
@@ -81,7 +88,7 @@ script = ExtResource("1_waual")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(6, 6)
 
-[node name="EventHandler" type="Node2D" parent="."]
+[node name="InputHandler" type="Node2D" parent="."]
 script = ExtResource("2_3c0q4")
 
 [node name="Map" type="Node2D" parent="."]
@@ -97,6 +104,8 @@ script = ExtResource("6_hh6ja")
 unique_name_in_owner = true
 tile_set = SubResource("TileSet_mm4tc")
 format = 2
+
+[node name="Objects" type="Node2D" parent="Map"]
 
 [node name="Entities" type="Node2D" parent="Map"]
 unique_name_in_owner = true

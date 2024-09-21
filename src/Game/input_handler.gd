@@ -1,20 +1,20 @@
-class_name EventHandler
+class_name InputHandler
 extends Node
 
 
-func get_action() -> Action:
+func get_action(player: EntityNew) -> Action:
 	var action: Action = null
 	
 	if Input.is_action_just_pressed("ui_up"):
-		action = MovementAction.new(0, -1, 0)
+		action = BumpAction.new(player, 0, -1, 0)
 	elif Input.is_action_just_pressed("ui_down"):
-		action = MovementAction.new(0, 1, 0)
+		action = BumpAction.new(player, 0, 1, 0)
 	elif Input.is_action_just_pressed("ui_left"):
-		action = MovementAction.new(-1, 0, 0)
+		action = BumpAction.new(player, -1, 0, 0)
 	elif Input.is_action_just_pressed("ui_right"):
-		action = MovementAction.new(1, 0, 0)
+		action = BumpAction.new(player, 1, 0, 0)
 	
 	if Input.is_action_just_pressed("ui_cancel"):
-		action = EscapeAction.new()
+		action = EscapeAction.new(player)
 	
 	return action

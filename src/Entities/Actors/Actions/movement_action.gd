@@ -1,19 +1,11 @@
 class_name MovementAction
-extends Action
+extends ActionWithDirection
 
-var offset: Vector3i
-
-
-func _init(dx: int, dy: int, dz: int) -> void:
-	offset = Vector3i(dx, dy, dz)
-
-
-func perform(game: GameGrid, entity: Entity) -> void:
-	var destination: Vector3i = entity.grid_position + offset
-	
-	var map_data: MapDataGrid = game.get_map_data()
-	var destination_tile: TileGrid = map_data.get_tile(destination)
+func perform() -> void:
+	var map_data: MapDataGrid = get_map_data()
+	var destination_tile: TileGrid = map_data.get_tile(get_destination())
 	if not destination_tile or not destination_tile.is_walkable():
 		return
+	if get_blocking_entity_at_destination():
+		return
 	entity.move(offset)
-	

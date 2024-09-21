@@ -17,10 +17,12 @@ enum TileTransform {
 	ROTATE_270 = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_V,
 }
 
-func generate(player: Entity) -> void:
+func generate(player: EntityNew) -> void:
 	map_data = dungeon_generator.generate_dungeon(player)
 	_place_tiles()
 	_place_entities()
+	
+	tileMap.set_layer_enabled(player.grid_position.z, true)
 
 func _place_tiles() -> void:
 	for x in range(0, map_data.width, 1):
@@ -28,6 +30,7 @@ func _place_tiles() -> void:
 			for z in range(0, map_data.depth, 1):
 				if x == 0 && y == 0:
 					tileMap.add_layer(z)
+					tileMap.set_layer_enabled(z, false)
 					tileMap.set_layer_name(z, str(z))
 					tileMap.set_layer_z_index(z, z)
 				var tile = map_data.get_tile(Vector3i(x, y, z))
@@ -51,4 +54,8 @@ func update_fov(player_position: Vector3i) -> void:
 	field_of_view.update_fov(map_data, player_position, fov_radius)
 	
 	for entity in map_data.entities:
-		entity.visible = map_data.get_tile(entity.grid_position).is_in_view
+		var is_visible: bool = map_data.get_tile(entity.grid_position).is_in_view && entity.grid_position.z == player_position.z
+		if entity.is_in_group("actors"):
+			entity.is_in_view = is_visible
+		else:
+			entity.is_in_view = is_visible

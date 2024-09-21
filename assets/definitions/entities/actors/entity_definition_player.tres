@@ -13,3 +13,4 @@ name = "Player"
 texture = SubResource("AtlasTexture_px5iv")
 color = Color(1, 1, 1, 1)
 is_blocking_movement = true
+max_health = 10.0

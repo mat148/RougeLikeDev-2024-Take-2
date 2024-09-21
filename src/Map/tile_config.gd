@@ -15,14 +15,30 @@ enum tile_names {
 	road_median_lines_t,
 	road_median_lines_cross,
 	sidewalk_edge,
-	sidewalk_corner_large
+	sidewalk_corner_large,
+	stairway_up,
+	stairway_down
 }
 
 enum tile_group_names {
 	center_road_group,
 	horizontal_road_group,
 	vertical_road_group,
-	plot_group
+	plot_group,
+	building_floor_group,
+	park_group
+}
+
+enum entity_names {
+	player,
+	enemy,
+	stairway_up,
+	stairway_down
+}
+
+var tile_to_entity: Dictionary = {
+	tile_names.stairway_up: entity_names.stairway_up,
+	tile_names.stairway_down: entity_names.stairway_down
 }
 
 #@export var tile_definitions: Dictionary
@@ -46,11 +62,19 @@ var tile_definitions: Dictionary = {
 	tile_names.sidewalk_corner_large: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_sidewalk_corner_large.tres")
 }
 
+const entity_definition: Dictionary = {
+	entity_names.player: preload("res://assets/definitions/entities/actors/player.tscn"),
+	entity_names.enemy: preload("res://assets/definitions/entities/actors/enemy.tscn"),
+	entity_names.stairway_up: preload("res://assets/definitions/entities/objects/stairway_up.tscn")
+}
+
 const tile_groups: Dictionary = {
 	tile_group_names.center_road_group: preload("res://assets/definitions/tiles/tile_groups/center_road_definition.tscn"),
 	tile_group_names.horizontal_road_group: preload("res://assets/definitions/tiles/tile_groups/horizontal_road_definition.tscn"),
 	tile_group_names.vertical_road_group: preload("res://assets/definitions/tiles/tile_groups/vertical_road_definition.tscn"),
-	tile_group_names.plot_group: preload("res://assets/definitions/tiles/tile_groups/plot_definition.tscn")
+	tile_group_names.plot_group: preload("res://assets/definitions/tiles/tile_groups/plot_definition.tscn"),
+	tile_group_names.building_floor_group: preload("res://assets/definitions/tiles/tile_groups/building_floor_definition.tscn"),
+	tile_group_names.park_group: preload("res://assets/definitions/tiles/tile_groups/park_definition.tscn")
 }
 
 const tile_atlas_to_type = {
@@ -70,6 +94,7 @@ const tile_atlas_to_type = {
 	Vector2i(11, 1): tile_names.road_median_lines_corner,
 	Vector2i(13, 1): tile_names.road_median_lines_t,
 	Vector2i(15, 1): tile_names.road_median_lines_cross,
+	Vector2i(15, 2): tile_names.stairway_up,
 	
 	Vector2i(7, 2): tile_names.sidewalk_edge,
 	Vector2i(9, 2): tile_names.sidewalk_corner_large,
@@ -89,3 +114,9 @@ func has_tile_group(tile_group: int) -> bool:
 
 func get_tile_group(tile_group: int) -> PackedScene:
 	return tile_groups[tile_group]
+
+func has_entity_type(entity: int) -> bool:
+	return entity_definition.has(entity)
+
+func get_entity_definition(entity: int) -> PackedScene:
+	return entity_definition[entity]

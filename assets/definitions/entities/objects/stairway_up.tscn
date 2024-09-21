@@ -1,0 +1,27 @@
+[gd_scene load_steps=7 format=3 uid="uid://bjwnwoeyoq3un"]
+
+[ext_resource type="PackedScene" uid="uid://b83xkxayp5qhh" path="res://assets/definitions/entities/components/texture_component.tscn" id="1_ntgoe"]
+[ext_resource type="Script" path="res://src/Entities/Objects/stairway_up.gd" id="1_rrh0t"]
+[ext_resource type="Texture2D" uid="uid://dm23tu5vweu5w" path="res://assets/images/tiles.png" id="2_ffhyf"]
+[ext_resource type="PackedScene" uid="uid://vy72la0iys8s" path="res://assets/definitions/entities/components/hit_box_component.tscn" id="3_n4nit"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0sfeq"]
+atlas = ExtResource("2_ffhyf")
+region = Rect2(240, 32, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_82v78"]
+size = Vector2(16, 16)
+
+[node name="StairwayUp" type="Node2D"]
+script = ExtResource("1_rrh0t")
+entity_name = "Stairway Up"
+
+[node name="TextureComponent" parent="." instance=ExtResource("1_ntgoe")]
+texture = SubResource("AtlasTexture_0sfeq")
+offset = Vector2(8, 8)
+
+[node name="HitBoxComponent" parent="." instance=ExtResource("3_n4nit")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent"]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_82v78")

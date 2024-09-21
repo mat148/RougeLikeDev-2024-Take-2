@@ -8,3 +8,4 @@ extends Resource
 
 @export_category("Mechanics")
 @export var is_blocking_movement: bool = true
+@export var max_health: float = 0.0

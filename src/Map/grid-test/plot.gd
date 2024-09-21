@@ -2,12 +2,15 @@ extends BaseObject
 class_name Plot
 
 var plot_count: int = 1
+var building_height: int = 0
+var building_levels: Array = []
 
 func _init(polygonArray: PackedVector2Array, new_position: Vector3i) -> void:
 	name = 'Plot'
 	position = new_position
 	polygon = Polygon2D.new()
 	polygon.polygon = polygonArray
+	building_height = randi_range(0, 5)
 
 func update_plot_count(amount: int) -> void:
 	plot_count += amount

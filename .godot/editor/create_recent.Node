@@ -1,4 +1,12 @@
 Node2D
+EntityNew
+CollisionShape2D
+Area2D
+Node
+Sprite2D
+AnimationPlayer
+Polygon2D
+CanvasModulate
 Label
 Button
 Control

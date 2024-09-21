@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=4 format=3 uid="uid://dmx111b7yq2mq"]
+
+[ext_resource type="Script" path="res://src/Entities/entity_definition.gd" id="1_7gv1h"]
+[ext_resource type="Texture2D" uid="uid://eda6dnpl0wd1" path="res://assets/images/monochrome_packed.png" id="2_17gyy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_px5iv"]
+atlas = ExtResource("2_17gyy")
+region = Rect2(32, 96, 16, 16)
+
+[resource]
+script = ExtResource("1_7gv1h")
+name = "Stairs"
+texture = SubResource("AtlasTexture_px5iv")
+color = Color(1, 1, 1, 1)
+is_blocking_movement = false
+max_health = 0.0
