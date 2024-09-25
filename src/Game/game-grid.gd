@@ -20,7 +20,7 @@ func _ready() -> void:
 	remove_child(camera)
 	player.add_child(camera)
 	map.generate(player)
-	map.update_fov(player.grid_position)
+	map.update_fov(player)
 
 
 func _physics_process(_delta: float) -> void:
@@ -30,7 +30,7 @@ func _physics_process(_delta: float) -> void:
 		action.perform()
 		_handle_enemy_turns()
 		if player.grid_position != previous_player_position:
-			map.update_fov(player.grid_position)
+			map.update_fov(player)
 
 func _handle_enemy_turns() -> void:
 	for entity in get_tree().get_nodes_in_group("actors"):

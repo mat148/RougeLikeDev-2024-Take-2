@@ -8,3 +8,5 @@ class_name Player
 
 func move(offset: Vector3i) -> void:
 	movementCompoent.move(offset)
+	map_data.current_layer = grid_position.z
+	z_index = map_data.current_layer

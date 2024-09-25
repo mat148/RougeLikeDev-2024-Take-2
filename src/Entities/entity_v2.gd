@@ -15,10 +15,14 @@ var grid_position: Vector3i:
 var is_in_view: bool = false:
 	set(value):
 		is_in_view = value
-		if self.is_in_group("actors"):
-			visible = is_in_view
-		else:
-			modulate = Color(1, 1, 1, 1 if is_in_view else 0.3)
+		
+		if grid_position.z == map_data.current_layer:
+			visible = true
+			if self.is_in_group("actors"):
+				visible = is_in_view
+			else:
+				modulate = Color(1, 1, 1, 1 if is_in_view else 0.3)
+		else: visible = false
 
 #func _init(map_data: MapDataGrid, start_position: Vector3i, entity_definition: EntityDefinition) -> void:
 	#visible = false

@@ -65,7 +65,8 @@ var tile_definitions: Dictionary = {
 const entity_definition: Dictionary = {
 	entity_names.player: preload("res://assets/definitions/entities/actors/player.tscn"),
 	entity_names.enemy: preload("res://assets/definitions/entities/actors/enemy.tscn"),
-	entity_names.stairway_up: preload("res://assets/definitions/entities/objects/stairway_up.tscn")
+	entity_names.stairway_up: preload("res://assets/definitions/entities/objects/stairway_up.tscn"),
+	entity_names.stairway_down: preload("res://assets/definitions/entities/objects/stairway_down.tscn")
 }
 
 const tile_groups: Dictionary = {
@@ -95,6 +96,7 @@ const tile_atlas_to_type = {
 	Vector2i(13, 1): tile_names.road_median_lines_t,
 	Vector2i(15, 1): tile_names.road_median_lines_cross,
 	Vector2i(15, 2): tile_names.stairway_up,
+	Vector2i(17, 2): tile_names.stairway_down,
 	
 	Vector2i(7, 2): tile_names.sidewalk_edge,
 	Vector2i(9, 2): tile_names.sidewalk_corner_large,

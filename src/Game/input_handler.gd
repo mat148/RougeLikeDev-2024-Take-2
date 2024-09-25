@@ -17,4 +17,7 @@ func get_action(player: EntityNew) -> Action:
 	if Input.is_action_just_pressed("ui_cancel"):
 		action = EscapeAction.new(player)
 	
+	if Input.is_action_just_pressed("interact"):
+		action = BumpAction.new(player, 0, 0, 1)
+	
 	return action

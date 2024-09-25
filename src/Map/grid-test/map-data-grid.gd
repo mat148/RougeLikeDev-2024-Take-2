@@ -11,6 +11,8 @@ var tiles: Array
 
 var entities: Array[EntityNew]
 
+var current_layer: int = 0
+
 func _init(map_width: int, map_height: int, map_depth: int, player: EntityNew) -> void:
 	width = map_width
 	height = map_height

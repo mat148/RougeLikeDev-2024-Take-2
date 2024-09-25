@@ -3,7 +3,7 @@ class_name Building
 
 var plot_count: int = 1
 var building_height: int = 0
-var building_floors: Array = []
+var building_floors: Array[Floor] = []
 
 func _init(polygonArray: PackedVector2Array, new_position: Vector3i) -> void:
 	name = 'Building'
@@ -17,3 +17,6 @@ func update_plot_count(amount: int) -> void:
 
 func return_plot_count() -> int:
 	return plot_count
+
+func get_floor(z: int) -> Floor:
+	return building_floors[z]

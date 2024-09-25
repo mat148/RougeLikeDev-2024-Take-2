@@ -1,17 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://b6ju7txbd0jmm"]
+[gd_scene load_steps=10 format=3 uid="uid://dn246a0eo4ypx"]
 
-[ext_resource type="Script" path="res://src/Game/game-grid.gd" id="1_waual"]
-[ext_resource type="Script" path="res://src/Game/input_handler.gd" id="2_3c0q4"]
-[ext_resource type="Script" path="res://src/Map/grid-test/map-grid.gd" id="3_xvve8"]
-[ext_resource type="Script" path="res://src/Map/grid-test/grid-generator.gd" id="4_kpdul"]
-[ext_resource type="Script" path="res://src/Map/field_of_view.gd" id="6_hh6ja"]
-[ext_resource type="Texture2D" uid="uid://dm23tu5vweu5w" path="res://assets/images/tiles.png" id="7_lxkmm"]
+[ext_resource type="Script" path="res://src/Game/game-grid.gd" id="1_18v2m"]
+[ext_resource type="Script" path="res://src/Game/input_handler.gd" id="2_hn40y"]
+[ext_resource type="Script" path="res://src/Map/grid-test/map-grid.gd" id="3_qnpep"]
+[ext_resource type="Script" path="res://src/Map/grid-test/grid-generator.gd" id="4_a8hrf"]
+[ext_resource type="Script" path="res://src/Map/field_of_view.gd" id="5_maawf"]
+[ext_resource type="Texture2D" uid="uid://dm23tu5vweu5w" path="res://assets/images/tiles.png" id="6_p0d7g"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_hagg5"]
 tile_data = PackedInt32Array(0, 0, 0, 65536, 458752, 1610612739, 131072, 65536, 0, 196608, 851968, 1610612736, 262144, 0, 0, 327680, 851968, 1610612737, 393216, 0, 0, 458752, 851968, 1342177280, 524288, 65536, 0, 589824, 458752, 1342177283, 655360, 0, 0, 1, 458752, 805306371, 65537, 524288, 805306371, 131073, 65536, 0, 196609, 851968, 1610612736, 262145, 0, 0, 327681, 851968, 1610612737, 393217, 0, 0, 458753, 851968, 1342177280, 524289, 65536, 0, 589825, 524288, 1342177283, 655361, 458752, 805306371, 2, 65536, 0, 65538, 65536, 0, 131074, 65536, 0, 196610, 851968, 1610612736, 262146, 0, 0, 327682, 851968, 1610612737, 393218, 0, 0, 458754, 851968, 1342177280, 524290, 65536, 0, 589826, 65536, 0, 655362, 65536, 0, 3, 851968, 805306368, 65539, 851968, 805306368, 131075, 851968, 805306368, 196611, 0, 0, 262147, 0, 0, 327683, 851968, 1610612737, 393219, 0, 0, 458755, 0, 0, 524291, 851968, 805306368, 589827, 851968, 805306368, 655363, 851968, 805306368, 4, 0, 0, 65540, 0, 0, 131076, 0, 0, 196612, 0, 0, 262148, 0, 0, 327684, 851968, 1610612737, 393220, 0, 0, 458756, 0, 0, 524292, 0, 0, 589828, 0, 0, 655364, 0, 0, 5, 851968, 1, 65541, 851968, 1, 131077, 851968, 1, 196613, 851968, 1, 262149, 851968, 1, 327685, 851968, 1610612737, 393221, 851968, 1, 458757, 851968, 1, 524293, 851968, 1, 589829, 851968, 1, 655365, 851968, 1, 6, 0, 0, 65542, 0, 0, 131078, 0, 0, 196614, 0, 0, 262150, 0, 0, 327686, 851968, 1610612737, 393222, 0, 0, 458758, 0, 0, 524294, 0, 0, 589830, 0, 0, 655366, 0, 0, 7, 851968, 0, 65543, 851968, 0, 131079, 851968, 0, 196615, 0, 0, 262151, 0, 0, 327687, 851968, 1610612737, 393223, 0, 0, 458759, 0, 0, 524295, 851968, 0, 589831, 851968, 0, 655367, 851968, 0, 8, 65536, 0, 65544, 65536, 0, 131080, 65536, 0, 196616, 851968, 1610612736, 262152, 0, 0, 327688, 851968, 1610612737, 393224, 0, 0, 458760, 851968, 1342177280, 524296, 65536, 0, 589832, 65536, 0, 655368, 65536, 0, 9, 458752, 3, 65545, 524288, 1610612739, 131081, 65536, 0, 196617, 851968, 1610612736, 262153, 0, 0, 327689, 851968, 1610612737, 393225, 0, 0, 458761, 851968, 1342177280, 524297, 65536, 0, 589833, 524288, 3, 655369, 458752, 3, 10, 0, 0, 65546, 458752, 1610612739, 131082, 65536, 0, 196618, 851968, 1610612736, 262154, 0, 0, 327690, 851968, 1610612737, 393226, 0, 0, 458762, 851968, 1342177280, 524298, 65536, 0, 589834, 458752, 1342177283, 655370, 0, 0)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_aibf8"]
-texture = ExtResource("7_lxkmm")
+texture = ExtResource("6_p0d7g")
 1:0/0 = 0
 2:0/0 = 0
 3:0/animation_columns = 3
@@ -77,23 +77,23 @@ texture = ExtResource("7_lxkmm")
 sources/0 = SubResource("TileSetAtlasSource_aibf8")
 pattern_0 = SubResource("TileMapPattern_hagg5")
 
-[node name="Grid Test" type="Node2D"]
-script = ExtResource("1_waual")
+[node name="Level test" type="Node2D"]
+script = ExtResource("1_18v2m")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(6, 6)
 
 [node name="InputHandler" type="Node2D" parent="."]
-script = ExtResource("2_3c0q4")
+script = ExtResource("2_hn40y")
 
 [node name="Map" type="Node2D" parent="."]
-script = ExtResource("3_xvve8")
+script = ExtResource("3_qnpep")
 
 [node name="DungeonGenerator" type="Node" parent="Map"]
-script = ExtResource("4_kpdul")
+script = ExtResource("4_a8hrf")
 
 [node name="FieldOfView" type="Node" parent="Map"]
-script = ExtResource("6_hh6ja")
+script = ExtResource("5_maawf")
 
 [node name="TileMap" type="TileMap" parent="Map"]
 unique_name_in_owner = true

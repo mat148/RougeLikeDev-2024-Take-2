@@ -22,7 +22,9 @@ func generate(player: EntityNew) -> void:
 	_place_tiles()
 	_place_entities()
 	
-	tileMap.set_layer_enabled(player.grid_position.z, true)
+	map_data.current_layer = player.grid_position.z
+	player.z_index = map_data.current_layer
+	#tileMap.set_layer_enabled(player.grid_position.z, true)
 
 func _place_tiles() -> void:
 	for x in range(0, map_data.width, 1):
@@ -50,12 +52,18 @@ func _place_entities() -> void:
 	for entity in map_data.entities:
 		entities.add_child(entity)
 
-func update_fov(player_position: Vector3i) -> void:
-	field_of_view.update_fov(map_data, player_position, fov_radius)
+func update_fov(player: EntityNew) -> void:
+	field_of_view.update_fov(map_data, player.grid_position, fov_radius)
+	
+	#var tile_layers: int = tileMap.get_layers_count()
+	#player.z_index = player.grid_position.z
+	tileMap.set_layer_enabled(map_data.current_layer, true)
 	
 	for entity in map_data.entities:
-		var is_visible: bool = map_data.get_tile(entity.grid_position).is_in_view && entity.grid_position.z == player_position.z
-		if entity.is_in_group("actors"):
-			entity.is_in_view = is_visible
-		else:
-			entity.is_in_view = is_visible
+		var is_visible: bool = map_data.get_tile(entity.grid_position).is_in_view && entity.grid_position.z == map_data.current_layer
+		entity.is_in_view = is_visible
+		
+		#if entity.is_in_group("actors"):
+			#entity.is_in_view = is_visible
+		#else:
+			#entity.is_in_view = is_visible

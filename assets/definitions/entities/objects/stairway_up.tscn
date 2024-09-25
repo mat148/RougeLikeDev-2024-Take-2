@@ -10,7 +10,7 @@ atlas = ExtResource("2_ffhyf")
 region = Rect2(240, 32, 16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_82v78"]
-size = Vector2(16, 16)
+size = Vector2(8, 8)
 
 [node name="StairwayUp" type="Node2D"]
 script = ExtResource("1_rrh0t")
@@ -25,3 +25,6 @@ offset = Vector2(8, 8)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent"]
 position = Vector2(8, 8)
 shape = SubResource("RectangleShape2D_82v78")
+
+[connection signal="area_entered" from="HitBoxComponent" to="." method="_on_hit_box_component_area_entered"]
+[connection signal="area_exited" from="HitBoxComponent" to="." method="_on_hit_box_component_area_exited"]
