@@ -1,2 +1,0 @@
-extends EntityNew
-class_name StairWayDown

@@ -17,7 +17,10 @@ enum TileTransform {
 	ROTATE_270 = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_V,
 }
 
-func generate(player: EntityNew) -> void:
+#func _ready() -> void:
+	#SignalBus.interact_event.connect(interact_with_entity)
+
+func generate(player: Entity) -> void:
 	map_data = dungeon_generator.generate_dungeon(player)
 	_place_tiles()
 	_place_entities()
@@ -46,18 +49,23 @@ func _place_tiles() -> void:
 				if tile_visibliity:
 					tileMap.set_cell(z, Vector2i(x, y), 0, atlas_coords, tile_rotation)
 				else:
-					tileMap.set_cell(z, Vector2i(x, y), 0, Vector2i(-1, -1), tile_rotation)
+					tileMap.set_cell(z, Vector2i(x, y), 0, Vector2i(1, 1), tile_rotation)
 
 func _place_entities() -> void:
 	for entity in map_data.entities:
 		entities.add_child(entity)
 
-func update_fov(player: EntityNew) -> void:
+func update_fov(player: Entity) -> void:
 	field_of_view.update_fov(map_data, player.grid_position, fov_radius)
 	
-	#var tile_layers: int = tileMap.get_layers_count()
+	var tile_layers: int = tileMap.get_layers_count()
+	for layer in tile_layers + 1:
+		tileMap.set_layer_enabled(layer, false)
 	#player.z_index = player.grid_position.z
-	tileMap.set_layer_enabled(map_data.current_layer, true)
+	
+	for layer in range(tile_layers, -1, -1):
+		if layer <= map_data.current_layer:
+			tileMap.set_layer_enabled(layer, true)
 	
 	for entity in map_data.entities:
 		var is_visible: bool = map_data.get_tile(entity.grid_position).is_in_view && entity.grid_position.z == map_data.current_layer

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dt05m3a63sqxj"]
+[gd_scene load_steps=10 format=3 uid="uid://dt05m3a63sqxj"]
 
 [ext_resource type="Script" path="res://src/Entities/Actors/Player.gd" id="1_rti7k"]
 [ext_resource type="Texture2D" uid="uid://eda6dnpl0wd1" path="res://assets/images/monochrome_packed.png" id="2_5105h"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://7cvpm0xqnlyn" path="res://assets/definitions/entities/components/health_component.tscn" id="4_v88y8"]
 [ext_resource type="PackedScene" uid="uid://vy72la0iys8s" path="res://assets/definitions/entities/components/hit_box_component.tscn" id="5_id2w3"]
 [ext_resource type="PackedScene" uid="uid://cepra13akardq" path="res://assets/definitions/entities/components/movement_component.tscn" id="6_itvpq"]
+[ext_resource type="PackedScene" uid="uid://cbsbqjnya2vh" path="res://assets/definitions/entities/components/attack_component.tscn" id="7_kdjk5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p8s8b"]
 atlas = ExtResource("2_5105h")
@@ -14,12 +15,13 @@ region = Rect2(288, 112, 16, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6h5ax"]
 size = Vector2(16, 16)
 
-[node name="Player" type="Node2D" node_paths=PackedStringArray("textureComponent", "healthComponent", "hitBoxComponent", "movementCompoent") groups=["actors"]]
+[node name="Player" type="Node2D" node_paths=PackedStringArray("textureComponent", "healthComponent", "hitBoxComponent", "movementCompoent", "attackComponent") groups=["actors"]]
 script = ExtResource("1_rti7k")
 textureComponent = NodePath("TextureComponent")
 healthComponent = NodePath("HealthComponent")
 hitBoxComponent = NodePath("HitBoxComponent")
 movementCompoent = NodePath("MovementComponent")
+attackComponent = NodePath("AttackComponent")
 entity_name = "Player"
 _is_blocking_movement = true
 
@@ -39,3 +41,8 @@ shape = SubResource("RectangleShape2D_6h5ax")
 
 [node name="MovementComponent" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("6_itvpq")]
 parent = NodePath("..")
+
+[node name="AttackComponent" parent="." instance=ExtResource("7_kdjk5")]
+max_hp = 6
+power = 1
+defense = 1

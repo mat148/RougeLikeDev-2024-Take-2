@@ -1,42 +1,49 @@
-[gd_scene load_steps=9 format=3 uid="uid://bhwd3r3xswi41"]
+[gd_scene load_steps=11 format=3 uid="uid://iwut11f0svdl"]
 
-[ext_resource type="Script" path="res://src/Entities/Actors/Enemy.gd" id="1_6hpmb"]
-[ext_resource type="PackedScene" uid="uid://b83xkxayp5qhh" path="res://assets/definitions/entities/components/texture_component.tscn" id="2_lw8fg"]
+[ext_resource type="Script" path="res://src/Entities/Actors/Enemy.gd" id="1_h0fie"]
+[ext_resource type="PackedScene" uid="uid://b83xkxayp5qhh" path="res://assets/definitions/entities/components/texture_component.tscn" id="2_r6l64"]
 [ext_resource type="Texture2D" uid="uid://eda6dnpl0wd1" path="res://assets/images/monochrome_packed.png" id="3_ouqis"]
-[ext_resource type="PackedScene" uid="uid://7cvpm0xqnlyn" path="res://assets/definitions/entities/components/health_component.tscn" id="4_q7j20"]
-[ext_resource type="PackedScene" uid="uid://vy72la0iys8s" path="res://assets/definitions/entities/components/hit_box_component.tscn" id="5_erbeb"]
-[ext_resource type="Script" path="res://src/Entities/Components/MovementComponent.gd" id="6_qnkuk"]
+[ext_resource type="PackedScene" uid="uid://7cvpm0xqnlyn" path="res://assets/definitions/entities/components/health_component.tscn" id="4_gqyxk"]
+[ext_resource type="PackedScene" uid="uid://vy72la0iys8s" path="res://assets/definitions/entities/components/hit_box_component.tscn" id="5_1y6wu"]
+[ext_resource type="PackedScene" uid="uid://cepra13akardq" path="res://assets/definitions/entities/components/movement_component.tscn" id="6_k0tfv"]
+[ext_resource type="PackedScene" uid="uid://bitm5gpqearnr" path="res://assets/definitions/entities/components/ai_component.tscn" id="7_4s1ap"]
+[ext_resource type="PackedScene" uid="uid://cbsbqjnya2vh" path="res://assets/definitions/entities/components/attack_component.tscn" id="8_x2pv3"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_p8s8b"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_1s7a5"]
 atlas = ExtResource("3_ouqis")
 region = Rect2(400, 32, 16, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6h5ax"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5hv65"]
 size = Vector2(16, 16)
 
-[node name="Enemy" type="Node2D" node_paths=PackedStringArray("textureComponent", "healthComponent", "hitBoxComponent", "movementCompoent") groups=["actors"]]
-script = ExtResource("1_6hpmb")
+[node name="Enemy" type="Node2D" node_paths=PackedStringArray("textureComponent", "healthComponent", "hitBoxComponent", "movementCompoent", "aiComponent", "attackComponent") groups=["actors"]]
+script = ExtResource("1_h0fie")
 textureComponent = NodePath("TextureComponent")
 healthComponent = NodePath("HealthComponent")
 hitBoxComponent = NodePath("HitBoxComponent")
 movementCompoent = NodePath("MovementComponent")
-entity_name = "Enemy"
-_is_blocking_movement = true
+aiComponent = NodePath("AIComponent")
+attackComponent = NodePath("AttackComponent")
 
-[node name="TextureComponent" parent="." instance=ExtResource("2_lw8fg")]
-texture = SubResource("AtlasTexture_p8s8b")
-offset = Vector2(8, 8)
+[node name="TextureComponent" parent="." instance=ExtResource("2_r6l64")]
+texture = SubResource("AtlasTexture_1s7a5")
 
-[node name="HealthComponent" parent="." instance=ExtResource("4_q7j20")]
-MAX_HEALTH = 10.0
+[node name="HealthComponent" parent="." instance=ExtResource("4_gqyxk")]
+MAX_HEALTH = 3.0
 
-[node name="HitBoxComponent" parent="." node_paths=PackedStringArray("healthComponent") instance=ExtResource("5_erbeb")]
+[node name="HitBoxComponent" parent="." node_paths=PackedStringArray("healthComponent") instance=ExtResource("5_1y6wu")]
 healthComponent = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent"]
-position = Vector2(8, 8)
-shape = SubResource("RectangleShape2D_6h5ax")
+shape = SubResource("RectangleShape2D_5hv65")
 
-[node name="MovementComponent" type="Node2D" parent="." node_paths=PackedStringArray("parent")]
-script = ExtResource("6_qnkuk")
+[node name="MovementComponent" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("6_k0tfv")]
 parent = NodePath("..")
+
+[node name="AIComponent" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("7_4s1ap")]
+parent = NodePath("..")
+
+[node name="AttackComponent" parent="." instance=ExtResource("8_x2pv3")]
+max_hp = 6
+power = 1
+defense = 1

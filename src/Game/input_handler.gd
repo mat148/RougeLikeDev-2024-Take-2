@@ -2,7 +2,7 @@ class_name InputHandler
 extends Node
 
 
-func get_action(player: EntityNew) -> Action:
+func get_action(player: Entity) -> Action:
 	var action: Action = null
 	
 	if Input.is_action_just_pressed("ui_up"):
@@ -18,6 +18,8 @@ func get_action(player: EntityNew) -> Action:
 		action = EscapeAction.new(player)
 	
 	if Input.is_action_just_pressed("interact"):
-		action = BumpAction.new(player, 0, 0, 1)
+		var current_entity: Entity = player.map_data.get_interactable_at_location(player.grid_position)
+		if current_entity:
+			action = ItemAction.new(player, current_entity)
 	
 	return action

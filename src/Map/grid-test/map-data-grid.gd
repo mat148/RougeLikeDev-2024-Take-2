@@ -2,18 +2,20 @@ class_name MapDataGrid
 extends RefCounted
 
 const tile_config = preload("res://assets/definitions/tiles/tile_config.tres")
+const entity_pathfinding_weight = 10.0
 
 var area: Rect2i
 var width: int
 var height: int
 var depth: int
 var tiles: Array
-
-var entities: Array[EntityNew]
+var entities: Array[Entity]
+var player: Entity
+var pathfinder: AStarGrid2D
 
 var current_layer: int = 0
 
-func _init(map_width: int, map_height: int, map_depth: int, player: EntityNew) -> void:
+func _init(map_width: int, map_height: int, map_depth: int, player: Entity) -> void:
 	width = map_width
 	height = map_height
 	depth = map_depth
@@ -21,7 +23,6 @@ func _init(map_width: int, map_height: int, map_depth: int, player: EntityNew) -
 	area = Rect2i(0, 0, map_width, map_height)
 	entities = []
 	_setup_tiles()
-
 
 func _setup_tiles() -> void:	
 	tiles = []
@@ -56,8 +57,57 @@ func grid_to_index(grid_position: Vector3i) -> int:
 		return -1
 	return grid_position.y * width + grid_position.x
 
-func get_blocking_entity_at_location(grid_position: Vector3i) -> EntityNew:
+func get_blocking_entity_at_location(grid_position: Vector3i) -> Entity:
 	for entity in entities:
 		if entity.is_blocking_movement() and entity.grid_position == grid_position:
 			return entity
+	return null
+
+func register_blocking_entity(entity: Entity) -> void:
+	var converted_entity_position: Vector2i = Vector2i(entity.grid_position.x, entity.grid_position.y)
+	pathfinder.set_point_weight_scale(converted_entity_position, entity_pathfinding_weight)
+
+func unregister_blocking_entity(entity: Entity) -> void:
+	var converted_entity_position: Vector2i = Vector2i(entity.grid_position.x, entity.grid_position.y)
+	pathfinder.set_point_weight_scale(converted_entity_position, 0)
+
+func setup_pathfinding() -> void:
+	pathfinder = AStarGrid2D.new()
+	pathfinder.region = Rect2i(0, 0, width, height)
+	pathfinder.update()
+	for z in depth:
+		for y in height:
+			for x in width:			
+				var grid_position := Vector3i(x, y, z)
+				var tile: TileGrid = get_tile(grid_position)
+				var converted_entity_position: Vector2i = Vector2i(grid_position.x, grid_position.y)
+				pathfinder.set_point_solid(converted_entity_position, not tile.is_walkable())
+	for entity in entities:
+		if entity.is_blocking_movement():
+			register_blocking_entity(entity)
+
+func get_actors() -> Array[Entity]:
+	var actors: Array[Entity] = []
+	for entity in entities:
+		if entity.is_alive() && entity.is_in_group("actors"):
+			actors.append(entity)
+	return actors
+
+func get_actor_at_location(location: Vector3i) -> Entity:
+	for actor in get_actors():
+		if actor.grid_position == location:
+			return actor
+	return null
+
+func get_interactables() -> Array[Entity]:
+	var interactables: Array[Entity] = []
+	for interactable in entities:
+		if interactable.is_in_group("interactable"):
+			interactables.append(interactable)
+	return interactables
+
+func get_interactable_at_location(location: Vector3i) -> Entity:
+	for interactable in get_interactables():
+		if interactable.grid_position == location:
+			return interactable
 	return null

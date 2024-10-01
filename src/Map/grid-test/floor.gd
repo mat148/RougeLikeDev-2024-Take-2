@@ -1,19 +1,19 @@
 extends BaseObject
 class_name Floor
 
-var stairway_up_options: Array[EntityNew]:
+var stairway_up_options: Array[Entity]:
 	get:
 		return stairway_up_options
 	set(value):
 		stairway_up_options.append(value)
 
-var stair_up_locations: Array[EntityNew]:
+var stair_up_locations: Array[Entity]:
 	get:
 		return stair_up_locations
 	set(value):
 		stair_up_locations.append(value)
 
-var stair_down_locations: Array[EntityNew]:
+var stair_down_locations: Array[Entity]:
 	get:
 		return stair_down_locations
 	set(value):

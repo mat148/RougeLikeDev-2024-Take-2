@@ -2,8 +2,16 @@ class_name MeleeAction
 extends ActionWithDirection
 
 func perform() -> void:
-	var target: EntityNew = get_blocking_entity_at_destination()
+	var target: Entity = get_target_actor()
 	if not target:
 		return
-		
-	print("You kick the %s, much to it's annoyance!" % target.get_entity_name())
+	
+	var damage: int = entity.attack_component.power - target.attack_component.defense
+	
+	var attack_description: String = "%s attacks %s" % [entity.get_entity_name(), target.get_entity_name()]
+	if damage > 0:
+		attack_description += " for %d hit points." % damage
+		target.attack_component.hp -= damage
+	else:
+		attack_description += " but does no damage."
+	print(attack_description)

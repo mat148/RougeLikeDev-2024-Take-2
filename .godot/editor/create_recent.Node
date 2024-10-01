@@ -1,7 +1,6 @@
-Area2D
 Node2D
-EntityNew
 CollisionShape2D
+Area2D
 Node
 Sprite2D
 AnimationPlayer

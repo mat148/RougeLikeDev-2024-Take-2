@@ -16,5 +16,5 @@ resource_local_to_scene = true
 script = ExtResource("1_ma4kv")
 lit_texture = SubResource("AtlasTexture_bf8dn")
 dark_texture = SubResource("AtlasTexture_akjg0")
-is_walkable = true
-is_transparent = true
+is_walkable = false
+is_transparent = false

@@ -21,19 +21,21 @@ func update_fov(map_data: MapDataGrid, origin: Vector3i, radius: int) -> void:
 	
 	_fov = [start_tile]
 	
-	var layers_to_cast = [origin.z]
-	for zPos: int in range(origin.z + 1, origin.z + 8, 1):
-		if zPos >= 0:
-			layers_to_cast.append(zPos)
-	for zNeg: int in range(origin.z - 7, origin.z, 1):
-		if zNeg >= 0:
-			layers_to_cast.append(zNeg)
+	#var layers_to_cast = [origin.z]
+	#for zPos: int in range(origin.z + 1, origin.z + 8, 1):
+		#if zPos >= 0:
+			#layers_to_cast.append(zPos)
+	#for zNeg: int in range(origin.z - 7, origin.z, 1):
+		#if zNeg >= 0:
+			#layers_to_cast.append(zNeg)
+	for i in 8:
+		_cast_light(map_data, origin.x, origin.y, map_data.current_layer, radius, 1, 1.0, 0.0, multipliers[0][i], multipliers[1][i], multipliers[2][i], multipliers[3][i])
 	
-	for layer in layers_to_cast:
-		tileMap.get_layers_count()
-		if tileMap.get_layer_name(layer) != "":
-			for i in 8:
-				_cast_light(map_data, origin.x, origin.y, layer, radius, 1, 1.0, 0.0, multipliers[0][i], multipliers[1][i], multipliers[2][i], multipliers[3][i])
+	#for layer in layers_to_cast:
+		#tileMap.get_layers_count()
+		#if tileMap.get_layer_name(layer) != "":
+			#for i in 8:
+				#_cast_light(map_data, origin.x, origin.y, layer, radius, 1, 1.0, 0.0, multipliers[0][i], multipliers[1][i], multipliers[2][i], multipliers[3][i])
 
 func update_tile(tile: TileGrid) -> void:
 	var tile_position = Grid.world_to_grid(tile.grid_position)
