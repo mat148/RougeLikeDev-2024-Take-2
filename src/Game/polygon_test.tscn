@@ -1090,19 +1090,23 @@ sources/0 = SubResource("TileSetAtlasSource_4x1lo")
 [node name="PolygonTest" type="Node2D" node_paths=PackedStringArray("polygon1", "polygon2", "polygon3")]
 script = ExtResource("1_a0ktl")
 polygon1 = NodePath("Polygon2D")
-polygon2 = NodePath("")
-polygon3 = NodePath("")
+polygon2 = NodePath("Polygon2D2")
+polygon3 = NodePath("Polygon2D3")
 
 [node name="TileMap" type="TileMap" parent="."]
+visible = false
 tile_set = SubResource("TileSet_bglqp")
 format = 2
 layer_0/tile_data = PackedInt32Array(0, 65536, 0, 65536, 65536, 0, 131072, 65536, 0, 1, 65536, 0, 65537, 65536, 0, 131073, 65536, 0, 2, 65536, 0, 65538, 65536, 0, 131074, 65536, 0, 196611, 65536, 0, 262147, 65536, 0, 327683, 65536, 0, 196612, 65536, 0, 262148, 65536, 0, 327684, 65536, 0, 196613, 65536, 0, 262149, 65536, 0, 327685, 65536, 0, 3, 65536, 0, 65539, 65536, 0, 131075, 65536, 0, 4, 65536, 0, 65540, 65536, 0, 131076, 65536, 0, 5, 65536, 0, 65541, 65536, 0, 131077, 65536, 0)
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 color = Color(1, 0.388235, 1, 0.317647)
-polygon = PackedVector2Array(0, 0, 96, 0, 96, 96, 48, 96, 48, 48, 0, 48)
+polygon = PackedVector2Array(0, 0, 50, 0, 50, 50, 0, 50)
 
 [node name="Polygon2D2" type="Polygon2D" parent="."]
-position = Vector2(104, 0)
 color = Color(0.0588235, 0.788235, 0.741176, 0.317647)
-polygon = PackedVector2Array(0, 0, 96, 0, 96, 96, 0, 96)
+polygon = PackedVector2Array(50, 0, 100, 0, 100, 50, 50, 50)
+
+[node name="Polygon2D3" type="Polygon2D" parent="."]
+position = Vector2(0, 112)
+color = Color(0, 0, 1, 1)

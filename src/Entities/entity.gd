@@ -5,6 +5,7 @@ extends Node2D
 @export var entity_name: String = ""
 var map_data: MapDataGrid
 @export var _is_blocking_movement: bool = false
+@export var is_static: bool = false
 
 var grid_position: Vector3i:
 	set(value):

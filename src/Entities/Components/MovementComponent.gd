@@ -9,4 +9,9 @@ func move(move_offset: Vector3i) -> void:
 	map_data.unregister_blocking_entity(parent)
 	parent.grid_position += move_offset
 	map_data.register_blocking_entity(parent)
+	
+	#map_data.get_tile()
+	
+	#check if air block below
+		#gravity
 

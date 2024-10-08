@@ -19,6 +19,8 @@ var is_in_view: bool = false:
 		if is_in_view and not is_explored:
 			is_explored = true
 
+var parent: BaseObject
+
 func _init(new_grid_position: Vector3i, tile_definition: TileDefinition) -> void:
 	visible = false
 	centered = false

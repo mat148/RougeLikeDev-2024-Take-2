@@ -1,20 +1,9 @@
-[gd_resource type="Resource" script_class="TileDefinition" load_steps=5 format=3 uid="uid://dee4rh4u6yqfe"]
+[gd_resource type="Resource" script_class="TileDefinition" load_steps=2 format=3 uid="uid://dee4rh4u6yqfe"]
 
 [ext_resource type="Script" path="res://src/Map/tile_definition.gd" id="1_ad8fi"]
-[ext_resource type="Texture2D" uid="uid://dm23tu5vweu5w" path="res://assets/images/tiles.png" id="1_fq1ey"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qv1js"]
-atlas = ExtResource("1_fq1ey")
-region = Rect2(192, 16, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7gak5"]
-atlas = ExtResource("1_fq1ey")
-region = Rect2(176, 16, 16, 16)
 
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_ad8fi")
-lit_texture = SubResource("AtlasTexture_7gak5")
-dark_texture = SubResource("AtlasTexture_qv1js")
 is_walkable = true
 is_transparent = true

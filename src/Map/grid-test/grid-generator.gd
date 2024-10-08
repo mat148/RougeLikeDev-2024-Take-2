@@ -21,10 +21,6 @@ var directions = [
 @export_category("Monsters RNG")
 @export var max_monsters_per_room: int = 2
 
-##OBJECTS
-const stairs_up_definition = preload("res://assets/definitions/entities/actors/entity_definition_stairs_up.tres")
-const stairs_down_definition = preload("res://assets/definitions/entities/actors/entity_definition_stairs_down.tres")
-
 ##ITEMS
 
 var _rng := RandomNumberGenerator.new()
@@ -34,50 +30,37 @@ var buildings: Array[Building] = []
 var parks: Array[Park] = []
 var roads: Array[Road] = []
 
-var plot_size: int = 11
-var road_size: int = 11
+#var plot_size: int = 11
+#var road_size: int = 11
 
 
 func _ready() -> void:
 	_rng.randomize()
 
 func generate_dungeon(player: Entity) -> MapDataGrid:
-	# Check if map_width and map_height are divisible by plot_size
-	if map_width % (plot_size) != 0:
-		printerr("Error: map_width must be divisible by the plot_size of ", plot_size)
-	if map_height % (plot_size) != 0:
-		printerr("Error: map_height must be divisible by the plot_size of ", plot_size)
+	plots = []
+	buildings = []
+	parks = []
+	roads = []
+	
+	for child in get_children():
+		child.queue_free()
+	
+	## Check if map_width and map_height are divisible by plot_size
+	#if map_width % (plot_size) != 0:
+		#printerr("Error: map_width must be divisible by the plot_size of ", plot_size)
+	#if map_height % (plot_size) != 0:
+		#printerr("Error: map_height must be divisible by the plot_size of ", plot_size)
 	
 	var dungeon := MapDataGrid.new(map_width, map_height, map_depth, player)
 	
-	var calc_plot_width: int = map_width / plot_size
-	var calc_plot_height: int = map_height / plot_size
-	
-	for x in 3:
-		for y in 3:
-			var location = Vector3i(x * plot_size, y * plot_size, 0)
-			if x == 1 && y == 1 || x == 2 && y == 0:
-				var local_building = Building.new(
-					[
-						Vector2i(location.x, location.y),
-						Vector2i(location.x + plot_size, location.y),
-						Vector2i(location.x + plot_size, location.y + plot_size),
-						Vector2i(location.x, location.y + plot_size),
-					],
-					location
-				)
-				buildings.append(local_building)
-			else:
-				var area = Plot.new(
-					[
-						Vector2i(location.x, location.y),
-						Vector2i(location.x + plot_size, location.y),
-						Vector2i(location.x + plot_size, location.y + plot_size),
-						Vector2i(location.x, location.y + plot_size),
-					],
-					location
-				)
-				_carve_area_polygon(dungeon, area)
+	var location: Vector3i = Vector3i(0,0,0)
+	var local_building = Building.new(location, dungeon)
+	var polygon3: Polygon2D = Polygon2D.new()
+	polygon3.polygon = local_building.polygon.polygon
+	buildings.append(local_building)
+	add_child(polygon3)
+	polygon3.position = Vector2(25,0)
 	
 	#Generate buildings
 	for building in buildings:
@@ -87,21 +70,85 @@ func generate_dungeon(player: Entity) -> MapDataGrid:
 		var min_y = min_max.min_y
 		var max_y = min_max.max_y
 		
-		#var canPlaceStairs: bool = building.building_height > 0
-		for floor: int in building.building_height + 1:
-			var new_floor = Floor.new(building, building.polygon.polygon, Vector3i(building.position.x, building.position.y, floor))
-			building.building_floors.append(new_floor)
-			
-			if floor == 0:
-				_place_area(dungeon, new_floor, TileConfig.tile_group_names.plot_group, min_x, min_y, floor)
-			else:
-				_place_area(dungeon, new_floor, TileConfig.tile_group_names.building_floor_group, min_x, min_y, floor)
-			
-			var rand_location = Vector2i(randi_range(min_x, max_x), randi_range(min_y, max_y))
-			_carve_tile(dungeon, new_floor, rand_location.x, rand_location.y, floor, TileConfig.tile_names.tree_1)
-			#_place_entities(dungeon, new_floor)
+		for x in range(min_x, max_x, 1):
+			for y in range(min_y, max_y, 1):
+				if building._is_point_in_polygon(Vector2i(x, y)):
+					_carve_tile(dungeon, building, x, y, 0, TileConfig.tile_names.wall_1)
+				else:
+					_carve_tile(dungeon, building, x, y, 0, TileConfig.tile_names.grass_1)
+					
+		for polygon in building.polygons:
+			polygon.color = Color(randi_range(0, 125), randi_range(0, 125), randi_range(0, 125))
+			add_child(polygon)
+		
+		##var canPlaceStairs: bool = building.building_height > 0
+		#for floor: int in building.building_height + 1:
+			#var new_floor = Floor.new(building, building.polygon.polygon, Vector3i(building.position.x, building.position.y, floor))
+			#building.building_floors.append(new_floor)
+			#
+			#if floor == 0:
+				#_place_area(dungeon, new_floor, TileConfig.tile_group_names.plot_group, min_x, min_y, floor)
+			#else:
+				#_place_area(dungeon, new_floor, TileConfig.tile_group_names.building_floor_group, min_x, min_y, floor)
+			#
+			#var rand_location = Vector2i(randi_range(min_x, max_x), randi_range(min_y, max_y))
+			#_carve_tile(dungeon, new_floor, rand_location.x, rand_location.y, floor, TileConfig.tile_names.tree_1)
+			##_place_entities(dungeon, new_floor)
 	
 	_place_player(dungeon, player)
+	
+	#var calc_plot_width: int = map_width / plot_size
+	#var calc_plot_height: int = map_height / plot_size
+	#
+	#for x in 3:
+		#for y in 3:
+			#var location = Vector3i(x * plot_size, y * plot_size, 0)
+			#if x == 1 && y == 1 || x == 2 && y == 0:
+				#var local_building = Building.new(
+					#[
+						#Vector2i(location.x, location.y),
+						#Vector2i(location.x + plot_size, location.y),
+						#Vector2i(location.x + plot_size, location.y + plot_size),
+						#Vector2i(location.x, location.y + plot_size),
+					#],
+					#location
+				#)
+				#buildings.append(local_building)
+			#else:
+				#var area = Plot.new(
+					#[
+						#Vector2i(location.x, location.y),
+						#Vector2i(location.x + plot_size, location.y),
+						#Vector2i(location.x + plot_size, location.y + plot_size),
+						#Vector2i(location.x, location.y + plot_size),
+					#],
+					#location
+				#)
+				#_carve_area_polygon(dungeon, area)
+	#
+	##Generate buildings
+	#for building in buildings:
+		#var min_max = building.get_bounding_box()
+		#var min_x = min_max.min_x
+		#var max_x = min_max.max_x
+		#var min_y = min_max.min_y
+		#var max_y = min_max.max_y
+		#
+		##var canPlaceStairs: bool = building.building_height > 0
+		#for floor: int in building.building_height + 1:
+			#var new_floor = Floor.new(building, building.polygon.polygon, Vector3i(building.position.x, building.position.y, floor))
+			#building.building_floors.append(new_floor)
+			#
+			#if floor == 0:
+				#_place_area(dungeon, new_floor, TileConfig.tile_group_names.plot_group, min_x, min_y, floor)
+			#else:
+				#_place_area(dungeon, new_floor, TileConfig.tile_group_names.building_floor_group, min_x, min_y, floor)
+			#
+			#var rand_location = Vector2i(randi_range(min_x, max_x), randi_range(min_y, max_y))
+			#_carve_tile(dungeon, new_floor, rand_location.x, rand_location.y, floor, TileConfig.tile_names.tree_1)
+			##_place_entities(dungeon, new_floor)
+	#
+	#_place_player(dungeon, player)
 	
 	#for y: int in calc_plot_height:
 		#for x: int in calc_plot_width:
@@ -192,6 +239,7 @@ func _carve_tile(dungeon: MapDataGrid, area: BaseObject, x: int, y: int, z: int,
 	var tile_position = Vector3i(x, y, z)
 	var tile: TileGrid = dungeon.get_tile(tile_position)
 	tile.tile_rotation = tile_rotation
+	tile.parent = area
 	
 	if dungeon.tile_config.tile_to_entity.has(tile_type):
 		var entity_type = dungeon.tile_config.tile_to_entity[tile_type]
@@ -317,18 +365,18 @@ func _place_area(dungeon: MapDataGrid, area: BaseObject, tile_group_name: int, m
 	tile_group_temp.queue_free()
 
 func _place_player(dungeon: MapDataGrid, player: Entity) -> void:
-	var randomPlot = buildings.pick_random()
-	var min_max = randomPlot.get_bounding_box()
-	var min_x = min_max.min_x
-	var max_x = min_max.max_x
-	var min_y = min_max.min_y
-	var max_y = min_max.max_y
-	
-	var x: int = (min_x + max_x) / 2
-	var y: int = (min_y + max_y) / 2
+	#var randomPlot = buildings.pick_random()
+	#var min_max = randomPlot.get_bounding_box()
+	#var min_x = min_max.min_x
+	#var max_x = min_max.max_x
+	#var min_y = min_max.min_y
+	#var max_y = min_max.max_y
+	#
+	#var x: int = (min_x + max_x) / 2
+	#var y: int = (min_y + max_y) / 2
 	
 	dungeon.entities.append(player)
-	player.place_entity(Vector3i(x, y, randomPlot.position.z))
+	player.place_entity(Vector3i(-1, -1, 0))
 	player.map_data = dungeon
 
 func _place_entities(dungeon: MapDataGrid, room: Floor) -> void:

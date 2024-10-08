@@ -21,6 +21,9 @@ enum TileTransform {
 	#SignalBus.interact_event.connect(interact_with_entity)
 
 func generate(player: Entity) -> void:
+	for entity in entities.get_children():
+		entity.queue_free()
+	
 	map_data = dungeon_generator.generate_dungeon(player)
 	_place_tiles()
 	_place_entities()
@@ -30,6 +33,7 @@ func generate(player: Entity) -> void:
 	#tileMap.set_layer_enabled(player.grid_position.z, true)
 
 func _place_tiles() -> void:
+	tileMap.clear()
 	for x in range(0, map_data.width, 1):
 		for y in range(0, map_data.height, 1):
 			for z in range(0, map_data.depth, 1):
@@ -46,10 +50,17 @@ func _place_tiles() -> void:
 				var atlas_coords: Vector2i = tile_region.position / 16
 				var tile_visibliity: bool = tile.visible
 				
+				#not seen tile = solid/transparent
+				#seen tile = normal tile
+				#visible = lit
+				
 				if tile_visibliity:
 					tileMap.set_cell(z, Vector2i(x, y), 0, atlas_coords, tile_rotation)
 				else:
-					tileMap.set_cell(z, Vector2i(x, y), 0, Vector2i(1, 1), tile_rotation)
+					if tile.parent && tile.parent.name == "Floor":
+						tileMap.set_cell(z, Vector2i(x, y), 0, Vector2i(13, 2), tile_rotation)
+					else:
+						tileMap.set_cell(z, Vector2i(x, y), 0, Vector2i(0, 0), tile_rotation)
 
 func _place_entities() -> void:
 	for entity in map_data.entities:

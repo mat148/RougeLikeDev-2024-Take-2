@@ -62,6 +62,10 @@ var tile_definitions: Dictionary = {
 	tile_names.sidewalk_corner_large: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_sidewalk_corner_large.tres")
 }
 
+const grass_definitions: Dictionary = {
+	tile_names.grass_1: preload("res://assets/definitions/tiles/individual_tiles/tile_definition_grass_1.tres")
+}
+
 const entity_definition: Dictionary = {
 	entity_names.player: preload("res://assets/definitions/entities/actors/player.tscn"),
 	entity_names.enemy: preload("res://assets/definitions/entities/actors/enemy.tscn"),
