@@ -1,15 +1,15 @@
 [gd_resource type="Resource" script_class="TileDefinition" load_steps=5 format=3 uid="uid://2e5tvssfq4wh"]
 
-[ext_resource type="Texture2D" uid="uid://blcorue3dgt73" path="res://assets/images/grass.png" id="1_amhfh"]
+[ext_resource type="Texture2D" uid="uid://dm23tu5vweu5w" path="res://assets/images/tiles.png" id="1_fn33y"]
 [ext_resource type="Script" path="res://src/Map/tile_definition.gd" id="1_n113j"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_limsl"]
-atlas = ExtResource("1_amhfh")
-region = Rect2(80, 0, 16, 16)
+atlas = ExtResource("1_fn33y")
+region = Rect2(112, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l0and"]
-atlas = ExtResource("1_amhfh")
-region = Rect2(16, 0, 16, 16)
+atlas = ExtResource("1_fn33y")
+region = Rect2(48, 0, 16, 16)
 
 [resource]
 resource_local_to_scene = true

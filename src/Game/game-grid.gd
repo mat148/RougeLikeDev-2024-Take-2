@@ -9,7 +9,9 @@ const tile_size = 16
 @onready var map: MapGrid = $Map
 @onready var camera: Camera2D = $Camera2D
 
-@export var world_size_dev: Label
+@export var world_width: LineEdit
+@export var world_height: LineEdit
+
 @export var building_type_dev: Label
 @export var height_width_dev: Label
 @export var position_dev: Label
@@ -28,15 +30,14 @@ func _generate() -> void:
 	camera = Camera2D.new()
 	player.add_child(camera)
 	
-	map.generate(player)
+	map.generate(player, int(world_width.text), int(world_height.text))
 	map.update_fov(player)
 	
 	if map.dungeon_generator.buildings:
-		world_size_dev.text = str(Vector2(map.map_data.width, map.map_data.height))
 		var building = map.dungeon_generator.buildings[0]
 		building_type_dev.text = str((building.building_types.keys()[building.building_type]).to_lower().capitalize())
 		var building_bounding_box = building.get_bounding_box()
-		height_width_dev.text = str(Vector3i(building_bounding_box.max_x, building_bounding_box.max_y, 0))
+		height_width_dev.text = str(Vector3i(building_bounding_box.max_x - building_bounding_box.min_x, building_bounding_box.max_y - building_bounding_box.min_y, 0))
 		position_dev.text = str(building.position)
 
 

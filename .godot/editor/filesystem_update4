@@ -1,10 +1,10 @@
 res://src/Game/grid-test.tscn
 res://assets/definitions/tiles/individual_tiles/tile_definition_grass_1.tres
+res://assets/tileset.tres
 res://src/Map/grid-test/building.gd
-res://assets/definitions/entities/actors/player.tscn
-res://assets/definitions/tiles/tile_groups/building_floor_definition.tscn
-res://assets/definitions/tiles/tile_groups/park_definition.tscn
+res://src/Map/grid-test/map-data-grid.gd
 res://src/Map/grid-test/map-grid.gd
-res://src/Game/game-grid.gd
+res://assets/definitions/tiles/individual_tiles/tile_definition_wall_1.tres
 res://src/Map/grid-test/grid-generator.gd
-res://src/Map/field_of_view.gd
+res://assets/definitions/tiles/individual_tiles/tile_definition_grass_4.tres
+res://src/Game/game-grid.gd

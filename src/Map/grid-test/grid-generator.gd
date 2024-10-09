@@ -30,14 +30,14 @@ var buildings: Array[Building] = []
 var parks: Array[Park] = []
 var roads: Array[Road] = []
 
-#var plot_size: int = 11
+var plot_size: int = 11
 #var road_size: int = 11
 
 
 func _ready() -> void:
 	_rng.randomize()
 
-func generate_dungeon(player: Entity) -> MapDataGrid:
+func generate_dungeon(player: Entity, world_width: int, world_height: int) -> MapDataGrid:
 	plots = []
 	buildings = []
 	parks = []
@@ -46,21 +46,39 @@ func generate_dungeon(player: Entity) -> MapDataGrid:
 	for child in get_children():
 		child.queue_free()
 	
+	map_width = world_width
+	map_height = world_height
+	
+	var building_plot_size: Vector3i = Vector3i(map_width - (plot_size * 6), map_height - (plot_size * 6), map_depth)
+	var building_plot_position: Vector3i = Vector3i(plot_size * 3, plot_size * 3, 0)
+	var dungeon := MapDataGrid.new(map_width, map_height, map_depth, building_plot_size, building_plot_position, player)
+	
+	#var calc_plot_width: int = map_width / plot_size
+	#var calc_plot_height: int = map_height / plot_size
+	
 	## Check if map_width and map_height are divisible by plot_size
 	#if map_width % (plot_size) != 0:
 		#printerr("Error: map_width must be divisible by the plot_size of ", plot_size)
 	#if map_height % (plot_size) != 0:
 		#printerr("Error: map_height must be divisible by the plot_size of ", plot_size)
 	
-	var dungeon := MapDataGrid.new(map_width, map_height, map_depth, player)
-	
-	var location: Vector3i = Vector3i(map_width/2, map_height/2, 0)
-	var local_building = Building.new(location, dungeon)
+	var local_building = Building.new(building_plot_position, dungeon)
 	#var polygon3: Polygon2D = Polygon2D.new()
 	#polygon3.polygon = local_building.polygon.polygon
 	buildings.append(local_building)
 	#add_child(polygon3)
 	#polygon3.position = Vector2(25,0)
+	
+	var area = Plot.new(
+		[
+			Vector2i(0,0)
+		],
+		Vector3i(0,0,0)
+	)
+	for x in building_plot_size.x:
+		for y in building_plot_size.y:
+			_carve_tile(dungeon, area, x + building_plot_position.x, y + building_plot_position.y, 0, TileConfig.tile_names.grass_4)
+	
 	
 	#Generate buildings
 	for building in buildings:
@@ -70,17 +88,17 @@ func generate_dungeon(player: Entity) -> MapDataGrid:
 		var min_y = min_max.min_y
 		var max_y = min_max.max_y
 		
-		var possible_doors: Array[Vector3i] = []
+		#var possible_doors: Array[Vector3i] = []
 		for x in range(min_x, max_x, 1):
 			for y in range(min_y, max_y, 1):
 				if building._is_point_in_polygon(Vector2i(x, y)):
-					possible_doors.append(Vector3i(x, y, 0))
+					#possible_doors.append(Vector3i(x, y, 0))
 					_carve_tile(dungeon, building, x, y, 0, TileConfig.tile_names.wall_1)
 				else:
 					_carve_tile(dungeon, building, x, y, 0, TileConfig.tile_names.grass_1)
 		
-		var door: Vector3i = possible_doors.pick_random()
-		_carve_tile(dungeon, building, door.x, door.y, 0, TileConfig.tile_names.door_1)
+		#var door: Vector3i = possible_doors.pick_random()
+		#_carve_tile(dungeon, building, door.x, door.y, 0, TileConfig.tile_names.door_1)
 		
 		for polygon in building.polygons:
 			polygon.color = Color.from_hsv((randi() % 12) / 12.0, 1, 1)
@@ -101,9 +119,7 @@ func generate_dungeon(player: Entity) -> MapDataGrid:
 			##_place_entities(dungeon, new_floor)
 	
 	_place_player(dungeon, player)
-	
-	#var calc_plot_width: int = map_width / plot_size
-	#var calc_plot_height: int = map_height / plot_size
+
 	#
 	#for x in 3:
 		#for y in 3:

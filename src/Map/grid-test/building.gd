@@ -25,59 +25,53 @@ func _init(new_position: Vector3i, dungeon: MapDataGrid) -> void:
 	#building_height = randi_range(1, 5)
 
 func generate_building() -> void:
-	var center_position: Vector2 = Vector2(position.x, position.y)
-	var size: Vector2 = Vector2(randi_range(12, 30), randi_range(12, 30)) # Random size between 50 and 100 units
+	var building_plot_size: Vector3 = local_dungeon.building_plot_size
+	
+	var size: Vector2 = Vector2(randi_range(12, 30), randi_range(12, 30))
+	var center_position: Vector2 = Vector2((building_plot_size.x/2) - (size.x/2), (building_plot_size.y/2) - (size.y/2)) + Vector2(position.x, position.y)
 	var central_polygon: Polygon2D = new_building(center_position, size)
 	polygons.append(central_polygon)
 	
-	#var new_position: Vector2 = Vector2(3, 0)
-	#var new_size: Vector2 = Vector2(5, 5)  # Random size between 50 and 100 units
-	#var new_polygon: Polygon2D = new_building(new_position, new_size)
-	#polygons.append(new_polygon)
+	polygon.polygon = central_polygon.polygon
+
+	#var previous_position = center_position
+	#var previous_size = size
 	#
-	#var new_position2: Vector2 = Vector2(3, 5)
-	#var new_size2: Vector2 = Vector2(10, 10)  # Random size between 50 and 100 units
-	#var new_polygon2: Polygon2D = new_building(new_position2, new_size2)
-	#polygons.append(new_polygon2)
-
-	var previous_position = center_position
-	var previous_size = size
-	
+	##polygon.polygon = merge_objects(polygons)
+#
+	## Step 2: Generate additional polygons
+	#for i in range(4):
+		#var direction = Global.directions.pick_random()
+#
+		## Random size for the new polygon
+		#var new_size = Vector2(randi_range(12, 30), randi_range(12, 30))
+		#var new_position: Vector2
+#
+		#if direction == Vector2.UP:
+			#new_position = Vector2(previous_position.x + randi_range(-15, 15), previous_position.y - new_size.y)
+		#if direction == Vector2.LEFT:
+			#new_position = Vector2(previous_position.x - new_size.x, previous_position.y + randi_range(-15, 15))
+		#if direction == Vector2.DOWN:
+			#new_position = Vector2(previous_position.x + randi_range(-15, 15), previous_position.y + previous_size.y)
+		#if direction == Vector2.RIGHT:
+			#new_position = Vector2(previous_position.x + previous_size.x, previous_position.y  + randi_range(-15, 15))
+#
+		#if local_dungeon.is_in_bounds(Vector3(new_position.x, new_position.y, 0)):
+			## Create new square polygon
+			#var new_polygon = new_building(new_position, new_size)
+			#var polygon_intersects: bool = false
+			#for polygon in polygons:
+				#if intersects(polygon, new_polygon):
+					#polygon_intersects = true
+			#
+			#if !polygon_intersects:
+				#polygons.append(new_polygon)
+#
+				## Update previous position and size
+				#previous_position = new_position
+				#previous_size = new_size
+	#
 	#polygon.polygon = merge_objects(polygons)
-
-	# Step 2: Generate additional polygons
-	for i in range(4):
-		var direction = Global.directions.pick_random()
-
-		# Random size for the new polygon
-		var new_size = Vector2(randi_range(12, 30), randi_range(12, 30))
-		var new_position: Vector2
-
-		if direction == Vector2.UP:
-			new_position = Vector2(previous_position.x + randi_range(-15, 15), previous_position.y - new_size.y)
-		if direction == Vector2.LEFT:
-			new_position = Vector2(previous_position.x - new_size.x, previous_position.y + randi_range(-15, 15))
-		if direction == Vector2.DOWN:
-			new_position = Vector2(previous_position.x + randi_range(-15, 15), previous_position.y + previous_size.y)
-		if direction == Vector2.RIGHT:
-			new_position = Vector2(previous_position.x + previous_size.x, previous_position.y  + randi_range(-15, 15))
-
-		if local_dungeon.is_in_bounds(Vector3(new_position.x, new_position.y, 0)):
-			# Create new square polygon
-			var new_polygon = new_building(new_position, new_size)
-			var polygon_intersects: bool = false
-			for polygon in polygons:
-				if intersects(polygon, new_polygon):
-					polygon_intersects = true
-			
-			if !polygon_intersects:
-				polygons.append(new_polygon)
-
-				# Update previous position and size
-				previous_position = new_position
-				previous_size = new_size
-	
-	polygon.polygon = merge_objects(polygons)
 
 func new_building(position: Vector2, size: Vector2) -> Polygon2D:
 	var points: Array[Vector2i] = [

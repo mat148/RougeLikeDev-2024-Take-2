@@ -21,11 +21,11 @@ enum TileTransform {
 #func _ready() -> void:
 	#SignalBus.interact_event.connect(interact_with_entity)
 
-func generate(player: Entity) -> bool:
+func generate(player: Entity, world_width: int, world_height: int) -> bool:
 	for entity in entities.get_children():
 		entity.queue_free()
 	
-	map_data = dungeon_generator.generate_dungeon(player)
+	map_data = dungeon_generator.generate_dungeon(player, world_width, world_height)
 	_place_tiles()
 	_place_entities()
 	
@@ -53,7 +53,7 @@ func _place_tiles() -> void:
 					tileMap.set_layer_enabled(z, false)
 					tileMap.set_layer_name(z, str(z))
 					tileMap.set_layer_z_index(z, z)
-				var tile = map_data.get_tile(Vector3i(x, y, z))
+				var tile: TileGrid = map_data.get_tile(Vector3i(x, y, z))
 				var tile_rotation = tile.tile_rotation
 				var tile_definition: TileDefinition = tile._definition
 				var tile_texture: AtlasTexture = tile_definition.dark_texture
