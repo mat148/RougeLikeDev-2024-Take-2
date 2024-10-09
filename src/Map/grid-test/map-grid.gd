@@ -1,7 +1,8 @@
 class_name MapGrid
 extends Node2D
 
-@onready var tileMap: TileMap = %TileMap
+var tileMap: TileMap
+@export var tileSet: TileSet
 
 @export var fov_radius: int = 8
 
@@ -20,7 +21,7 @@ enum TileTransform {
 #func _ready() -> void:
 	#SignalBus.interact_event.connect(interact_with_entity)
 
-func generate(player: Entity) -> void:
+func generate(player: Entity) -> bool:
 	for entity in entities.get_children():
 		entity.queue_free()
 	
@@ -31,8 +32,18 @@ func generate(player: Entity) -> void:
 	map_data.current_layer = player.grid_position.z
 	player.z_index = map_data.current_layer
 	#tileMap.set_layer_enabled(player.grid_position.z, true)
+	
+	return true
 
 func _place_tiles() -> void:
+	if tileMap:
+		tileMap.queue_free()
+	tileMap = TileMap.new()
+	tileMap.tile_set = tileSet
+	add_child(tileMap)
+	
+	field_of_view.tileMap = tileMap
+	
 	tileMap.clear()
 	for x in range(0, map_data.width, 1):
 		for y in range(0, map_data.height, 1):

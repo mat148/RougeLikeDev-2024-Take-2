@@ -6,3 +6,5 @@ res://assets/definitions/tiles/tile_groups/building_floor_definition.tscn
 res://assets/definitions/tiles/tile_groups/park_definition.tscn
 res://src/Map/grid-test/map-grid.gd
 res://src/Game/game-grid.gd
+res://src/Map/grid-test/grid-generator.gd
+res://src/Map/field_of_view.gd

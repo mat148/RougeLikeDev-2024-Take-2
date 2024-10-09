@@ -9,6 +9,11 @@ const tile_size = 16
 @onready var map: MapGrid = $Map
 @onready var camera: Camera2D = $Camera2D
 
+@export var world_size_dev: Label
+@export var building_type_dev: Label
+@export var height_width_dev: Label
+@export var position_dev: Label
+
 #
 #func _ready() -> void:
 	##TODO: Threading
@@ -20,11 +25,19 @@ func _generate() -> void:
 	player.place_entity(Vector3i.ZERO)
 	player.visible = false
 	
-	remove_child(camera)
+	camera = Camera2D.new()
 	player.add_child(camera)
 	
 	map.generate(player)
 	map.update_fov(player)
+	
+	if map.dungeon_generator.buildings:
+		world_size_dev.text = str(Vector2(map.map_data.width, map.map_data.height))
+		var building = map.dungeon_generator.buildings[0]
+		building_type_dev.text = str((building.building_types.keys()[building.building_type]).to_lower().capitalize())
+		var building_bounding_box = building.get_bounding_box()
+		height_width_dev.text = str(Vector3i(building_bounding_box.max_x, building_bounding_box.max_y, 0))
+		position_dev.text = str(building.position)
 
 
 func _physics_process(_delta: float) -> void:

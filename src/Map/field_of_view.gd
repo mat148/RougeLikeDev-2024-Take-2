@@ -1,7 +1,7 @@
 class_name FieldOfView
 extends Node
 
-@onready var tileMap: TileMap = %TileMap
+var tileMap: TileMap
 
 const multipliers = [
 	[1, 0, 0, -1, -1, 0, 0, 1],

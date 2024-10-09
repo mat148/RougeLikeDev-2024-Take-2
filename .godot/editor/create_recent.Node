@@ -1,9 +1,9 @@
-Button
 HBoxContainer
+Label
+Button
 CenterContainer
 Panel
 VBoxContainer
-Label
 GridContainer
 AspectRatioContainer
 Control

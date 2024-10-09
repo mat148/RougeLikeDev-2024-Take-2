@@ -54,13 +54,13 @@ func generate_dungeon(player: Entity) -> MapDataGrid:
 	
 	var dungeon := MapDataGrid.new(map_width, map_height, map_depth, player)
 	
-	var location: Vector3i = Vector3i(0,0,0)
+	var location: Vector3i = Vector3i(map_width/2, map_height/2, 0)
 	var local_building = Building.new(location, dungeon)
-	var polygon3: Polygon2D = Polygon2D.new()
-	polygon3.polygon = local_building.polygon.polygon
+	#var polygon3: Polygon2D = Polygon2D.new()
+	#polygon3.polygon = local_building.polygon.polygon
 	buildings.append(local_building)
-	add_child(polygon3)
-	polygon3.position = Vector2(25,0)
+	#add_child(polygon3)
+	#polygon3.position = Vector2(25,0)
 	
 	#Generate buildings
 	for building in buildings:
@@ -70,15 +70,20 @@ func generate_dungeon(player: Entity) -> MapDataGrid:
 		var min_y = min_max.min_y
 		var max_y = min_max.max_y
 		
+		var possible_doors: Array[Vector3i] = []
 		for x in range(min_x, max_x, 1):
 			for y in range(min_y, max_y, 1):
 				if building._is_point_in_polygon(Vector2i(x, y)):
+					possible_doors.append(Vector3i(x, y, 0))
 					_carve_tile(dungeon, building, x, y, 0, TileConfig.tile_names.wall_1)
 				else:
 					_carve_tile(dungeon, building, x, y, 0, TileConfig.tile_names.grass_1)
-					
+		
+		var door: Vector3i = possible_doors.pick_random()
+		_carve_tile(dungeon, building, door.x, door.y, 0, TileConfig.tile_names.door_1)
+		
 		for polygon in building.polygons:
-			polygon.color = Color(randi_range(0, 125), randi_range(0, 125), randi_range(0, 125))
+			polygon.color = Color.from_hsv((randi() % 12) / 12.0, 1, 1)
 			add_child(polygon)
 		
 		##var canPlaceStairs: bool = building.building_height > 0
@@ -375,8 +380,18 @@ func _place_player(dungeon: MapDataGrid, player: Entity) -> void:
 	#var x: int = (min_x + max_x) / 2
 	#var y: int = (min_y + max_y) / 2
 	
+	var building: Building = buildings[0]
+	var min_max = building.get_bounding_box()
+	var min_x = min_max.min_x
+	var max_x = min_max.max_x
+	var min_y = min_max.min_y
+	var max_y = min_max.max_y
+	
+	#var x: int = (min_x + max_x) / 2
+	#var y: int = (min_y + max_y) / 2
+	
 	dungeon.entities.append(player)
-	player.place_entity(Vector3i(-1, -1, 0))
+	player.place_entity(Vector3i(min_x - 5, min_y - 5, 0))
 	player.map_data = dungeon
 
 func _place_entities(dungeon: MapDataGrid, room: Floor) -> void:

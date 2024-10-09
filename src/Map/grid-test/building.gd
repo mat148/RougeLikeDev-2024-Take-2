@@ -25,8 +25,8 @@ func _init(new_position: Vector3i, dungeon: MapDataGrid) -> void:
 	#building_height = randi_range(1, 5)
 
 func generate_building() -> void:
-	var center_position: Vector2 = Vector2.ZERO
-	var size: Vector2 = Vector2(randi_range(5, 10), randi_range(5, 10)) # Random size between 50 and 100 units
+	var center_position: Vector2 = Vector2(position.x, position.y)
+	var size: Vector2 = Vector2(randi_range(12, 30), randi_range(12, 30)) # Random size between 50 and 100 units
 	var central_polygon: Polygon2D = new_building(center_position, size)
 	polygons.append(central_polygon)
 	
@@ -50,17 +50,17 @@ func generate_building() -> void:
 		var direction = Global.directions.pick_random()
 
 		# Random size for the new polygon
-		var new_size = Vector2(randi_range(5, 10), randi_range(5, 10))
+		var new_size = Vector2(randi_range(12, 30), randi_range(12, 30))
 		var new_position: Vector2
 
 		if direction == Vector2.UP:
-			new_position = Vector2(previous_position.x, previous_position.y - new_size.y)
+			new_position = Vector2(previous_position.x + randi_range(-15, 15), previous_position.y - new_size.y)
 		if direction == Vector2.LEFT:
-			new_position = Vector2(previous_position.x - new_size.x, previous_position.y)
+			new_position = Vector2(previous_position.x - new_size.x, previous_position.y + randi_range(-15, 15))
 		if direction == Vector2.DOWN:
-			new_position = Vector2(previous_position.x, previous_position.y + previous_size.y)
+			new_position = Vector2(previous_position.x + randi_range(-15, 15), previous_position.y + previous_size.y)
 		if direction == Vector2.RIGHT:
-			new_position = Vector2(previous_position.x + previous_size.x, previous_position.y)
+			new_position = Vector2(previous_position.x + previous_size.x, previous_position.y  + randi_range(-15, 15))
 
 		if local_dungeon.is_in_bounds(Vector3(new_position.x, new_position.y, 0)):
 			# Create new square polygon
