@@ -1,7 +1,7 @@
 class_name MapGrid
 extends Node2D
 
-var tileMap: TileMap
+@export var tileMap: TileMap
 @export var tileSet: TileSet
 
 @export var fov_radius: int = 8
@@ -30,17 +30,17 @@ func generate(player: Entity, world_width: int, world_height: int) -> bool:
 	_place_entities()
 	
 	map_data.current_layer = player.grid_position.z
-	player.z_index = map_data.current_layer
+	player.z_index = map_data.current_layer + 1
 	#tileMap.set_layer_enabled(player.grid_position.z, true)
 	
 	return true
 
 func _place_tiles() -> void:
 	if tileMap:
-		tileMap.queue_free()
-	tileMap = TileMap.new()
-	tileMap.tile_set = tileSet
-	add_child(tileMap)
+		tileMap.clear()
+	#tileMap = TileMap.new()
+	#tileMap.tile_set = tileSet
+	#add_child(tileMap)
 	
 	field_of_view.tileMap = tileMap
 	

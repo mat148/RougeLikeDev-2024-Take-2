@@ -3,6 +3,7 @@ class_name BaseObject
 
 var name: String = ""
 var polygon: Polygon2D
+var sub_areas: Array[BaseObject]
 var position: Vector3
 
 func get_bounding_box() -> Dictionary:
@@ -21,11 +22,11 @@ func get_bounding_box() -> Dictionary:
 	
 	return {'min_x': min_x, 'max_x': max_x, 'min_y': min_y, 'max_y': max_y}
 
-func intersects(object1: Polygon2D, object2: Polygon2D) -> bool:
+func intersects(object1: Polygon2D, object2: Polygon2D) -> Array:
 	var intersections: Array[PackedVector2Array] = Geometry2D.intersect_polygons(object1.polygon, object2.polygon)
 	
-	if intersections.is_empty(): return false
-	else: return true
+	if intersections.is_empty(): return []
+	else: return intersections
 
 func _is_point_in_polygon(point: Vector2i) -> bool:
 	return Geometry2D.is_point_in_polygon(point, polygon.polygon)
@@ -56,3 +57,23 @@ func merge_objects(polygons: Array[Polygon2D]) -> PackedVector2Array:
 		merged_polygon = new_polygon[0]
 	
 	return merged_polygon
+
+func get_edge_points() -> Array[Vector2]:
+	var edge_points: Array[Vector2] = []
+	var points: PackedVector2Array = polygon.polygon
+	var num_points: int = points.size()
+
+	for i in range(num_points):
+		var start_point: Vector2 = points[i]
+		var end_point: Vector2 = points[(i + 1) % num_points]  # Wrap around to the first point
+		var edge_vector: Vector2 = end_point - start_point
+		var edge_length: float = edge_vector.length() - 1
+
+		var num_segments: int = max(1, int(edge_length))
+		var segment_vector: Vector2 = edge_vector / num_segments
+
+		for j in range(num_segments):
+			var point_on_edge: Vector2 = start_point + segment_vector * j
+			edge_points.append(point_on_edge)
+
+	return edge_points

@@ -12,6 +12,8 @@ const tile_size = 16
 @export var world_width: LineEdit
 @export var world_height: LineEdit
 
+@export var building_lot_position: Label
+@export var building_lot_size: Label
 @export var building_type_dev: Label
 @export var height_width_dev: Label
 @export var position_dev: Label
@@ -28,18 +30,22 @@ func _generate() -> void:
 	player.visible = false
 	
 	camera = Camera2D.new()
+	camera.zoom = Vector2(2,2)
 	player.add_child(camera)
 	
 	map.generate(player, int(world_width.text), int(world_height.text))
 	map.update_fov(player)
 	
 	if map.dungeon_generator.buildings:
+		var mapData: MapDataGrid = map.map_data
+		building_lot_position.text = str(mapData.building_plot_position)
+		building_lot_size.text = str(mapData.building_plot_size)
+		
 		var building = map.dungeon_generator.buildings[0]
 		building_type_dev.text = str((building.building_types.keys()[building.building_type]).to_lower().capitalize())
 		var building_bounding_box = building.get_bounding_box()
 		height_width_dev.text = str(Vector3i(building_bounding_box.max_x - building_bounding_box.min_x, building_bounding_box.max_y - building_bounding_box.min_y, 0))
 		position_dev.text = str(building.position)
-
 
 func _physics_process(_delta: float) -> void:
 	if player:

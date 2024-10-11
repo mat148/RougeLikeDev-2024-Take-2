@@ -69,19 +69,32 @@ func generate_dungeon(player: Entity, world_width: int, world_height: int) -> Ma
 	#add_child(polygon3)
 	#polygon3.position = Vector2(25,0)
 	
-	var area = Plot.new(
-		[
-			Vector2i(0,0)
-		],
-		Vector3i(0,0,0)
-	)
-	for x in building_plot_size.x:
-		for y in building_plot_size.y:
-			_carve_tile(dungeon, area, x + building_plot_position.x, y + building_plot_position.y, 0, TileConfig.tile_names.grass_4)
+	#var area = Plot.new(
+		#[
+			#Vector2i(0,0)
+		#],
+		#Vector3i(0,0,0)
+	#)
+	#for x in building_plot_size.x:
+		#for y in building_plot_size.y:
+			#_carve_tile(dungeon, area, x + building_plot_position.x, y + building_plot_position.y, 0, TileConfig.tile_names.dev)
 	
 	
 	#Generate buildings
+	##TODO Move this into the building generation?
 	for building in buildings:
+		for sub_area in building.sub_areas:
+			if sub_area.name == 'Path':
+				var min_max = sub_area.get_bounding_box()
+				var min_x = min_max.min_x
+				var max_x = min_max.max_x
+				var min_y = min_max.min_y
+				var max_y = min_max.max_y
+				
+				for x in range(min_x, max_x, 1):
+					for y in range(min_y, max_y, 1):
+						_carve_tile(dungeon, building, x, y, 0, TileConfig.tile_names.grass_4)
+		
 		var min_max = building.get_bounding_box()
 		var min_x = min_max.min_x
 		var max_x = min_max.max_x
@@ -97,12 +110,20 @@ func generate_dungeon(player: Entity, world_width: int, world_height: int) -> Ma
 				else:
 					_carve_tile(dungeon, building, x, y, 0, TileConfig.tile_names.grass_1)
 		
+		
+		#var edge_points: Array[Vector2] = building.get_edge_points()
+		#for position in edge_points:
+			#_carve_tile(dungeon, building, position.x, position.y, 0, TileConfig.tile_names.wall_1)
+		
+		for door in building.doors:
+			_carve_tile(dungeon, building, door.x, door.y, 0, TileConfig.tile_names.door_1)
+		
 		#var door: Vector3i = possible_doors.pick_random()
 		#_carve_tile(dungeon, building, door.x, door.y, 0, TileConfig.tile_names.door_1)
 		
-		for polygon in building.polygons:
-			polygon.color = Color.from_hsv((randi() % 12) / 12.0, 1, 1)
-			add_child(polygon)
+		#for polygon in building.polygons:
+			#polygon.color = Color.from_hsv((randi() % 12) / 12.0, 1, 1)
+			#add_child(polygon)
 		
 		##var canPlaceStairs: bool = building.building_height > 0
 		#for floor: int in building.building_height + 1:

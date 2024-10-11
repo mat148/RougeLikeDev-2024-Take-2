@@ -2,6 +2,7 @@ extends Resource
 class_name TileConfig
 
 enum tile_names {
+	dev,
 	air,
 	blank,
 	grass_1,
@@ -46,6 +47,7 @@ var tile_to_entity: Dictionary = {
 #@export var tile_groups: Dictionary
 
 var tile_definitions: Dictionary = {
+	tile_names.dev: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_dev.tres"),
 	tile_names.air: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_air.tres"),
 	tile_names.blank: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_blank.tres"),
 	tile_names.grass_1: ResourceLoader.load("res://assets/definitions/tiles/individual_tiles/tile_definition_grass_1.tres"),
